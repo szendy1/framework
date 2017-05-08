@@ -53,10 +53,10 @@ RM = "C:\Program Files\JetBrains\CLion 2017.1.1\bin\cmake\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\alexa\OneDrive\Bakalarka\code\Framework
+CMAKE_SOURCE_DIR = C:\Users\alexa\Git\framework\Framework
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\alexa\Git\framework\Framework\cmake-build-debug
 
 #=============================================================================
 # Target rules for target CMakeFiles/framework.dir
@@ -65,7 +65,7 @@ CMAKE_BINARY_DIR = C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-
 CMakeFiles/framework.dir/all:
 	$(MAKE) -f CMakeFiles\framework.dir\build.make CMakeFiles/framework.dir/depend
 	$(MAKE) -f CMakeFiles\framework.dir\build.make CMakeFiles/framework.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target framework"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target framework"
 .PHONY : CMakeFiles/framework.dir/all
 
 # Include target in all.
@@ -75,9 +75,9 @@ all: CMakeFiles/framework.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/framework.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles 7
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/framework.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/framework.dir/rule
 
 # Convenience name for target.

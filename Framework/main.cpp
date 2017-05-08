@@ -8,7 +8,7 @@
 int mainLib() {
     std::cout << "Hello, World!" << std::endl;
 
-    GenProg c = GenProg();
+    GenProg<double> c;
     c.perform();
 /*
     std::cout << c.log.generations[0][0].toString() << std::endl;

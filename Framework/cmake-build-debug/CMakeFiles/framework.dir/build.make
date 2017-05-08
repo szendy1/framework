@@ -42,10 +42,10 @@ RM = "C:\Program Files\JetBrains\CLion 2017.1.1\bin\cmake\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\alexa\OneDrive\Bakalarka\code\Framework
+CMAKE_SOURCE_DIR = C:\Users\alexa\Git\framework\Framework
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\alexa\Git\framework\Framework\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/framework.dir/depend.make
@@ -58,16 +58,16 @@ include CMakeFiles/framework.dir/flags.make
 
 CMakeFiles/framework.dir/main.cpp.obj: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/framework.dir/main.cpp.obj"
-	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\main.cpp.obj -c C:\Users\alexa\OneDrive\Bakalarka\code\Framework\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/framework.dir/main.cpp.obj"
+	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\main.cpp.obj -c C:\Users\alexa\Git\framework\Framework\main.cpp
 
 CMakeFiles/framework.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/framework.dir/main.cpp.i"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\OneDrive\Bakalarka\code\Framework\main.cpp > CMakeFiles\framework.dir\main.cpp.i
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\Git\framework\Framework\main.cpp > CMakeFiles\framework.dir\main.cpp.i
 
 CMakeFiles/framework.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/framework.dir/main.cpp.s"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\OneDrive\Bakalarka\code\Framework\main.cpp -o CMakeFiles\framework.dir\main.cpp.s
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\Git\framework\Framework\main.cpp -o CMakeFiles\framework.dir\main.cpp.s
 
 CMakeFiles/framework.dir/main.cpp.obj.requires:
 
@@ -82,16 +82,16 @@ CMakeFiles/framework.dir/main.cpp.obj.provides.build: CMakeFiles/framework.dir/m
 
 CMakeFiles/framework.dir/src/Node.cpp.obj: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/src/Node.cpp.obj: ../src/Node.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/framework.dir/src/Node.cpp.obj"
-	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\Node.cpp.obj -c C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Node.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/framework.dir/src/Node.cpp.obj"
+	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\Node.cpp.obj -c C:\Users\alexa\Git\framework\Framework\src\Node.cpp
 
 CMakeFiles/framework.dir/src/Node.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/framework.dir/src/Node.cpp.i"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Node.cpp > CMakeFiles\framework.dir\src\Node.cpp.i
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\Git\framework\Framework\src\Node.cpp > CMakeFiles\framework.dir\src\Node.cpp.i
 
 CMakeFiles/framework.dir/src/Node.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/framework.dir/src/Node.cpp.s"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Node.cpp -o CMakeFiles\framework.dir\src\Node.cpp.s
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\Git\framework\Framework\src\Node.cpp -o CMakeFiles\framework.dir\src\Node.cpp.s
 
 CMakeFiles/framework.dir/src/Node.cpp.obj.requires:
 
@@ -106,16 +106,16 @@ CMakeFiles/framework.dir/src/Node.cpp.obj.provides.build: CMakeFiles/framework.d
 
 CMakeFiles/framework.dir/src/Log.cpp.obj: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/src/Log.cpp.obj: ../src/Log.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/framework.dir/src/Log.cpp.obj"
-	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\Log.cpp.obj -c C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Log.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/framework.dir/src/Log.cpp.obj"
+	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\Log.cpp.obj -c C:\Users\alexa\Git\framework\Framework\src\Log.cpp
 
 CMakeFiles/framework.dir/src/Log.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/framework.dir/src/Log.cpp.i"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Log.cpp > CMakeFiles\framework.dir\src\Log.cpp.i
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\Git\framework\Framework\src\Log.cpp > CMakeFiles\framework.dir\src\Log.cpp.i
 
 CMakeFiles/framework.dir/src/Log.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/framework.dir/src/Log.cpp.s"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Log.cpp -o CMakeFiles\framework.dir\src\Log.cpp.s
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\Git\framework\Framework\src\Log.cpp -o CMakeFiles\framework.dir\src\Log.cpp.s
 
 CMakeFiles/framework.dir/src/Log.cpp.obj.requires:
 
@@ -130,16 +130,16 @@ CMakeFiles/framework.dir/src/Log.cpp.obj.provides.build: CMakeFiles/framework.di
 
 CMakeFiles/framework.dir/src/Generation.cpp.obj: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/src/Generation.cpp.obj: ../src/Generation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/framework.dir/src/Generation.cpp.obj"
-	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\Generation.cpp.obj -c C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Generation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/framework.dir/src/Generation.cpp.obj"
+	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\Generation.cpp.obj -c C:\Users\alexa\Git\framework\Framework\src\Generation.cpp
 
 CMakeFiles/framework.dir/src/Generation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/framework.dir/src/Generation.cpp.i"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Generation.cpp > CMakeFiles\framework.dir\src\Generation.cpp.i
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\Git\framework\Framework\src\Generation.cpp > CMakeFiles\framework.dir\src\Generation.cpp.i
 
 CMakeFiles/framework.dir/src/Generation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/framework.dir/src/Generation.cpp.s"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Generation.cpp -o CMakeFiles\framework.dir\src\Generation.cpp.s
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\Git\framework\Framework\src\Generation.cpp -o CMakeFiles\framework.dir\src\Generation.cpp.s
 
 CMakeFiles/framework.dir/src/Generation.cpp.obj.requires:
 
@@ -154,16 +154,16 @@ CMakeFiles/framework.dir/src/Generation.cpp.obj.provides.build: CMakeFiles/frame
 
 CMakeFiles/framework.dir/src/GenProg.cpp.obj: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/src/GenProg.cpp.obj: ../src/GenProg.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/framework.dir/src/GenProg.cpp.obj"
-	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\GenProg.cpp.obj -c C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\GenProg.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/framework.dir/src/GenProg.cpp.obj"
+	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\GenProg.cpp.obj -c C:\Users\alexa\Git\framework\Framework\src\GenProg.cpp
 
 CMakeFiles/framework.dir/src/GenProg.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/framework.dir/src/GenProg.cpp.i"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\GenProg.cpp > CMakeFiles\framework.dir\src\GenProg.cpp.i
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\Git\framework\Framework\src\GenProg.cpp > CMakeFiles\framework.dir\src\GenProg.cpp.i
 
 CMakeFiles/framework.dir/src/GenProg.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/framework.dir/src/GenProg.cpp.s"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\GenProg.cpp -o CMakeFiles\framework.dir\src\GenProg.cpp.s
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\Git\framework\Framework\src\GenProg.cpp -o CMakeFiles\framework.dir\src\GenProg.cpp.s
 
 CMakeFiles/framework.dir/src/GenProg.cpp.obj.requires:
 
@@ -178,16 +178,16 @@ CMakeFiles/framework.dir/src/GenProg.cpp.obj.provides.build: CMakeFiles/framewor
 
 CMakeFiles/framework.dir/src/Func.cpp.obj: CMakeFiles/framework.dir/flags.make
 CMakeFiles/framework.dir/src/Func.cpp.obj: ../src/Func.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/framework.dir/src/Func.cpp.obj"
-	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\Func.cpp.obj -c C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Func.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/framework.dir/src/Func.cpp.obj"
+	C:\MinGW\bin\g++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\framework.dir\src\Func.cpp.obj -c C:\Users\alexa\Git\framework\Framework\src\Func.cpp
 
 CMakeFiles/framework.dir/src/Func.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/framework.dir/src/Func.cpp.i"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Func.cpp > CMakeFiles\framework.dir\src\Func.cpp.i
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\alexa\Git\framework\Framework\src\Func.cpp > CMakeFiles\framework.dir\src\Func.cpp.i
 
 CMakeFiles/framework.dir/src/Func.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/framework.dir/src/Func.cpp.s"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\OneDrive\Bakalarka\code\Framework\src\Func.cpp -o CMakeFiles\framework.dir\src\Func.cpp.s
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\alexa\Git\framework\Framework\src\Func.cpp -o CMakeFiles\framework.dir\src\Func.cpp.s
 
 CMakeFiles/framework.dir/src/Func.cpp.obj.requires:
 
@@ -222,7 +222,7 @@ libframework.dll: CMakeFiles/framework.dir/build.make
 libframework.dll: CMakeFiles/framework.dir/linklibs.rsp
 libframework.dll: CMakeFiles/framework.dir/objects1.rsp
 libframework.dll: CMakeFiles/framework.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX shared library libframework.dll"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX shared library libframework.dll"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\framework.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -244,6 +244,6 @@ CMakeFiles/framework.dir/clean:
 .PHONY : CMakeFiles/framework.dir/clean
 
 CMakeFiles/framework.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\alexa\OneDrive\Bakalarka\code\Framework C:\Users\alexa\OneDrive\Bakalarka\code\Framework C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug C:\Users\alexa\OneDrive\Bakalarka\code\Framework\cmake-build-debug\CMakeFiles\framework.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\alexa\Git\framework\Framework C:\Users\alexa\Git\framework\Framework C:\Users\alexa\Git\framework\Framework\cmake-build-debug C:\Users\alexa\Git\framework\Framework\cmake-build-debug C:\Users\alexa\Git\framework\Framework\cmake-build-debug\CMakeFiles\framework.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/framework.dir/depend
 

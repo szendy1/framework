@@ -1,7 +1,3 @@
-//
-// Created by Alexander on 5. 4. 2017.
-//
-
 #ifndef FRAMEWORK_FUNC_H
 #define FRAMEWORK_FUNC_H
 

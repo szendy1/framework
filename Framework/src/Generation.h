@@ -1,7 +1,3 @@
-//
-// Created by Alexander on 31.01.2017.
-//
-
 #ifndef FRAMEWORK_GENERATION_H
 #define FRAMEWORK_GENERATION_H
 

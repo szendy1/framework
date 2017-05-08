@@ -1,7 +1,3 @@
-//
-// Created by Alexander on 24.01.2017.
-//
-
 #ifndef FRAMEWORK_NODE_H
 #define FRAMEWORK_NODE_H
 

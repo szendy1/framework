@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/alexa/OneDrive/Bakalarka/code/Odmocnina/main.cpp" "C:/Users/alexa/OneDrive/Bakalarka/code/Odmocnina/cmake-build-debug/CMakeFiles/Odmocnina.dir/main.cpp.obj"
+  "C:/Users/alexa/Git/framework/Odmocnina/main.cpp" "C:/Users/alexa/Git/framework/Odmocnina/cmake-build-debug/CMakeFiles/Odmocnina.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
