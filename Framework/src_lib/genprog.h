@@ -38,7 +38,7 @@ public:
     void Vary();
     void FeedNewGeneration();
 
-    virtual T fitFunc(const Node &root);
+    virtual double fitFunc(const Node &root);
 
     void addFunction(const Func &func);
 

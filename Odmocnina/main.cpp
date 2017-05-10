@@ -5,8 +5,15 @@
 
 #include "genprog.h"
 
+
 GenProg<double> g;
 std::vector<double> values;
+
+template <typename values_t> class myGenProg<values_t> : public GenProg<values_t>{
+public:
+    double fitFunc(const Node &root) override;
+};
+
 struct MyClass {
     static double evaluateTree(const Node &child, double val);
 
@@ -18,6 +25,19 @@ struct MyClass {
 
     static double divide(const std::vector<Node> &children, double val);
 };
+
+template <typename values_t> double myGenProg<values_t>::fitFunc(const Node &root) override {
+    double res = 0.0;
+    for (int i =0 ; i < values.size();i++){
+        values[i];
+        double e = MyClass::evaluateTree(root, values[i]);
+        res += fabs(e - sqrt(values[i]));
+    }
+
+    return res/values.size();
+}
+
+
 double MyClass::evaluateTree(const Node &child, double val) {
     auto f = child.getFunc();
     if (child.isTerm){

@@ -1,6 +1,13 @@
 #ifndef FRAMEWORK_GENPROG_H
 #define FRAMEWORK_GENPROG_H
 
+
+/* git
+ * Func -> min,max, func
+ * lib abstrakt
+ * function ???
+ */
+
 #include <string>
 #include <vector>
 #include <time.h>
@@ -49,13 +56,7 @@ private:
     std::pair<Node &,int> findChildInTree(Node &tree, int num);
     Node getRandomIndividual();
 
-    virtual double fitFunc(const Node &root) { return 0.0; };
-    /*static double evaluateTree(const Node &child, double val);
-    static double plus(const std::vector<Node> &children,double val);
-    static double minus(const std::vector<Node> &children,double val);
-    static double multiply(const std::vector<Node> &children,double val);
-    static double divide(const std::vector<Node> &children,double val);
-     */
+
 public:
     GenProg();
     void perform();
@@ -65,6 +66,8 @@ public:
     void FeedNewGeneration();
 
     void addfunction(const Func &func);
+
+    virtual double fitFunc(const Node &root) { return 0.0; };
 
 };
 
@@ -411,55 +414,6 @@ template<typename values_t> void GenProg<values_t>::performCrossover(std::vector
 
 }
 
-
-
-/*
-double GenProg::fitFunc(const Node &root) {
-    double res = 0.0;
-    for (int i =0 ; i < values.size();i++){
-        values[i];
-        double e = evaluateTree(root, values[i]);
-        res += fabs(e - sqrt(values[i]));
-    }
-
-    return res/values.size();
-}
-
-double GenProg::evaluateTree(const Node &child, double val) {
-    auto f = child.getFunc();
-    if (child.isTerm){
-        return val;
-    }
-    return (f.getFunc()(child.getChildren(),val));
-}
-
-double GenProg::plus(const std::vector<Node> &children,double val) {
-    double res =0.0;
-    for (int i = 0;i<children.size();i++){
-        res+=evaluateTree(children[i],val);
-    }
-    return res;
-}
-
-double GenProg::minus(const std::vector<Node> &children,double val) {
-    if (children.size()==1){
-        return -evaluateTree(children[0],val);
-    }
-    return evaluateTree(children[0],val)-evaluateTree(children[1],val);
-}
-
-double GenProg::multiply(const std::vector<Node> &children,double val) {
-    return evaluateTree(children[0],val)*evaluateTree(children[1],val);
-}
-
-
-double GenProg::divide(const std::vector<Node> &children,double val) {
-    if (evaluateTree(children[1], val) == 0) {
-        return 1;
-    }
-    return evaluateTree(children[0],val)/evaluateTree(children[1],val);
-}
-*/
 
 template <typename values_t> void GenProg<values_t>::addfunction(const Func & func){
     this->functions.push_back(func);
