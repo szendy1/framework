@@ -6,7 +6,7 @@
 #include "genprog.h"
 
 GenProg<double> g;
-
+std::vector<double> values;
 struct MyClass {
     static double evaluateTree(const Node &child, double val);
 
@@ -26,15 +26,15 @@ double MyClass::evaluateTree(const Node &child, double val) {
     return (f.getFunc()(child.getChildren(),val));
 }
 
-template <class T> T GenProg<T>::fitFunc(const Node &root) {
+template <typename values_t> double GenProg<values_t>::fitFunc(const Node &root) {
     double res = 0.0;
-    for (int i =0 ; i < g.values.size();i++){
-        g.values[i];
-        double e = MyClass::evaluateTree(root, g.values[i]);
-        res += fabs(e - sqrt(g.values[i]));
+    for (int i =0 ; i < values.size();i++){
+        values[i];
+        double e = MyClass::evaluateTree(root, values[i]);
+        res += fabs(e - sqrt(values[i]));
     }
 
-    return res/g.values.size();
+    return res/values.size();
 }
 
 double MyClass::plus(const std::vector<Node> &children, double val) {
@@ -63,9 +63,10 @@ double MyClass::minus(const std::vector<Node> &children,double val) {
     }
     return evaluateTree(children[0],val)/evaluateTree(children[1],val);
 }
+
 int main() {
     //mainLib();
-    g= GenProg<double>();
+
     g.populationSize = 100;
     g.generations = 50;
 
@@ -76,17 +77,23 @@ int main() {
     g.crossoverChance = 40;
 
     g.maxTreeHeight = 5;
-    // TODO: g.terminals/g.values put after g.function -> break on Func p() *(line 77)
-    g.terminals = std::vector<std::string> {"input1"};
-    g.values = std::vector<double> {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,13.0,15.0,17.0,19.0,20.0,24.0,26.0,28.0,30.0,33.0,35.0,37.0,39.0,40.0,45.0,50.0,54.0,61.0,66.0,67.0,68.0,76.0,86.0};
 
+    values = std::vector<double> {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,13.0,15.0,17.0,19.0,20.0,24.0,26.0,28.0,30.0,33.0,35.0,37.0,39.0,40.0,45.0,50.0,54.0,61.0,66.0,67.0,68.0,76.0,86.0};
+
+    g.terminals = std::vector<std::string> {"input1"};
+
+    // TODO:
     Func p(MyClass::plus,2,5,"+");
     Func min(MyClass::minus,1,2,"-");
     Func mul(MyClass::multiply,2,2,"*");
     Func d(MyClass::divide,2,2,"/");
 
 
-    g.function = std::vector<Func> {p,min,mul,d};
+    g.functions = std::vector<Func> {};
+    g.functions.push_back(p);
+    g.functions.emplace_back(min);
+    g.functions.emplace_back(mul);
+    g.functions.emplace_back(d);
    // g.function = std::vector<Func> {};
 
     /*g.addFunction(p);
@@ -95,9 +102,7 @@ int main() {
     g.addFunction(d);
     */
 
-
-    // TODO: ??? Functions SET, but not in GenProg ???
-    std::cout << g.function.size() << std::endl;
+    std::cout << g.functions.size() << std::endl;
 
     g.perform();
 

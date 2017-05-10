@@ -11,17 +11,15 @@ class Node;
 class Func;
 
 
-template <class T> class GenProg {
+template <typename values_t> class GenProg {
 public:
     //Variables
     std::vector<Node> gen;
     int populationSize;
     int generations;
 
-    std::vector<Func> function;
+    std::vector<Func> functions;
     std::vector<std::string> terminals;
-
-    std::vector<T> values;
 
     double chanceFullTree;
 
@@ -32,13 +30,15 @@ public:
 
     //Functions
 
+    GenProg();
+
     void perform();
     void Initialization();
     void Evaluation();
     void Vary();
     void FeedNewGeneration();
 
-    virtual T fitFunc(const Node &root);
+    virtual double fitFunc(const Node &root);
 
     void addFunction(const Func &func);
 
