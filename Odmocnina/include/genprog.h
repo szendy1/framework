@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <functional>
 
 template <typename T> class Node;
 template <typename T> class Func;

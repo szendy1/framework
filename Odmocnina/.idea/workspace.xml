@@ -42,8 +42,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1700">
-              <caret line="68" column="6" lean-forward="false" selection-start-line="68" selection-start-column="6" selection-end-line="68" selection-end-column="6" />
+            <state relative-caret-position="150">
+              <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -54,10 +54,13 @@
       <file leaf-file-name="myGenProg.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/myGenProg.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="8" column="41" lean-forward="true" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+            <state relative-caret-position="100">
+              <caret line="4" column="28" lean-forward="false" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
               <folding>
-                <element signature="e#93#106#0" expanded="true" />
+                <element signature="e#123#136#0" expanded="true" />
+                <element signature="e#158#171#0" expanded="true" />
+                <element signature="e#197#209#0" expanded="true" />
+                <element signature="e#539#551#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -66,16 +69,15 @@
       <file leaf-file-name="genprog.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/include/genprog.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="22" />
+            <state relative-caret-position="150">
+              <caret line="6" column="17" lean-forward="true" selection-start-line="6" selection-start-column="17" selection-end-line="7" selection-end-column="21" />
               <folding>
-                <element signature="e#58#75#0" expanded="true" />
-                <element signature="e#122#134#0" expanded="true" />
-                <element signature="e#156#168#0" expanded="true" />
-                <element signature="e#190#202#0" expanded="true" />
-                <element signature="e#224#237#0" expanded="true" />
-                <element signature="e#1622#1636#0" expanded="true" />
-                <element signature="e#3275#3287#0" expanded="true" />
+                <element signature="e#144#156#0" expanded="true" />
+                <element signature="e#178#190#0" expanded="true" />
+                <element signature="e#212#224#0" expanded="true" />
+                <element signature="e#246#259#0" expanded="true" />
+                <element signature="e#1644#1658#0" expanded="true" />
+                <element signature="e#3297#3309#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -145,10 +147,10 @@
         <option value="$PROJECT_DIR$/../Framework/src/Func.h" />
         <option value="$PROJECT_DIR$/../Framework/src/GenProg.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/libframework.dll" />
-        <option value="$PROJECT_DIR$/include/genprog.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/include/genprog.h" />
         <option value="$PROJECT_DIR$/myGenProg.h" />
+        <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
   </component>
@@ -484,12 +486,12 @@
       <workItem from="1494404366666" duration="5282000" />
       <workItem from="1494507197173" duration="3934000" />
       <workItem from="1494522361800" duration="4578000" />
-      <workItem from="1494528994537" duration="251000" />
+      <workItem from="1494528994537" duration="1949000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103315000" />
+    <option name="totallyTimeSpent" value="105013000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -497,7 +499,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1515625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33105803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33105803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29652998" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -822,37 +824,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1700">
-          <caret line="68" column="6" lean-forward="false" selection-start-line="68" selection-start-column="6" selection-end-line="68" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/libframework.dll">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/genprog.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="22" />
-          <folding>
-            <element signature="e#58#75#0" expanded="true" />
-            <element signature="e#122#134#0" expanded="true" />
-            <element signature="e#156#168#0" expanded="true" />
-            <element signature="e#190#202#0" expanded="true" />
-            <element signature="e#224#237#0" expanded="true" />
-            <element signature="e#1622#1636#0" expanded="true" />
-            <element signature="e#3275#3287#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -864,12 +840,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/include/genprog.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="17" lean-forward="true" selection-start-line="6" selection-start-column="17" selection-end-line="7" selection-end-column="21" />
+          <folding>
+            <element signature="e#144#156#0" expanded="true" />
+            <element signature="e#178#190#0" expanded="true" />
+            <element signature="e#212#224#0" expanded="true" />
+            <element signature="e#246#259#0" expanded="true" />
+            <element signature="e#1644#1658#0" expanded="true" />
+            <element signature="e#3297#3309#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/myGenProg.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="41" lean-forward="true" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+        <state relative-caret-position="100">
+          <caret line="4" column="28" lean-forward="false" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
           <folding>
-            <element signature="e#93#106#0" expanded="true" />
+            <element signature="e#123#136#0" expanded="true" />
+            <element signature="e#158#171#0" expanded="true" />
+            <element signature="e#197#209#0" expanded="true" />
+            <element signature="e#539#551#0" expanded="true" />
           </folding>
         </state>
       </provider>

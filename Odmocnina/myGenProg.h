@@ -2,19 +2,24 @@
 #ifndef ODMOCNINA_MYGENPROG_H
 #define ODMOCNINA_MYGENPROG_H
 
-#include <genprog.h>
+#include "include/genprog.h"
+#include <functional>
 
 template <typename T > class Func;
+template <typename T > class GenProg;
 
-class myGenProg : public GenProg<double>{
+template <typename T> class myGenProg : public GenProg<T>{
 public:
-    std::vector< std::vector<double> > values;
-    double fitFunc(const Node<double> &root) override;
-    static double evaluateTree(const Node<double> &child, std::vector<double> val);
+    std::vector< std::vector<T> > values;
+    double fitFunc(const Node<T> &root) override;
+    static double evaluateTree(const Node<double> &child, std::vector<double> val){
+        auto f = child.getFunc();
+        return f.getFunc()(child.getChildren(),val);
+    };
 
 };
 
-double myGenProg::fitFunc(const Node<double> &root) {
+template <typename T> double myGenProg<T>::fitFunc(const Node<T> &root) {
     double res = 0.0;
     for (int i =0 ; i < values.size();i++){
         values[i];
@@ -25,9 +30,5 @@ double myGenProg::fitFunc(const Node<double> &root) {
     return res/values.size();
 }
 
-double myGenProg::evaluateTree(const Node<double> &child, std::vector<double> val) {
-    auto f = child.getFunc();
-    return (f.getFunc()(child.getChildren(),val));
-}
 
 #endif //ODMOCNINA_MYGENPROG_H
