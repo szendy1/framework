@@ -3,76 +3,55 @@
 #include <cmath>
 #include <functional>
 
-#include "genprog.h"
-
-std::vector<double> values;
-
-template <typename values_t> class myGenProg : public GenProg<values_t>{
-public:
-    double fitFunc(const Node &root) override;
-};
-
-static double evaluateTree(const Node &child, double val);
-
-static double plus(const std::vector<Node> &children, double val);
-
-static double minus(const std::vector<Node> &children, double val);
-
-static double multiply(const std::vector<Node> &children, double val);
-
-static double divide(const std::vector<Node> &children, double val);
-
-template <typename values_t> double myGenProg<values_t>::fitFunc(const Node &root) {
-    double res = 0.0;
-    for (int i =0 ; i < values.size();i++){
-        values[i];
-        double e = evaluateTree(root, values[i]);
-        res += fabs(e - sqrt(values[i]));
-    }
-
-    return res/values.size();
-}
+#include "include/genprog.h"
+#include "myGenProg.h"
 
 
-double evaluateTree(const Node &child, double val) {
-    auto f = child.getFunc();
-    if (child.isTerm){
-        return val;
-    }
-    return (f.getFunc()(child.getChildren(),val));
-}
+static double plus(const std::vector< Node<double> > &children, std::vector<double> val);
 
-double plus(const std::vector<Node> &children, double val) {
+static double minus(const std::vector< Node<double> > &children, std::vector<double> val);
+
+static double multiply(const std::vector< Node<double> > &children, std::vector<double> val);
+
+static double divide(const std::vector< Node<double> > &children, std::vector<double> val);
+
+static double aterm(const std::vector< Node<double> > &children,std::vector<double> val);
+
+double plus(const std::vector< Node<double> > &children, std::vector<double> val) {
     double res =0.0;
     for (int i = 0;i<children.size();i++){
-        res+=evaluateTree(children[i],val);
+        res+=myGenProg::evaluateTree(children[i],val);
     }
     return res;
 }
 
-double minus(const std::vector<Node> &children,double val) {
+double minus(const std::vector< Node<double> > &children,std::vector<double> val) {
     if (children.size()==1){
-        return -evaluateTree(children[0],val);
+        return -myGenProg::evaluateTree(children[0],val);
     }
-    return evaluateTree(children[0],val)-evaluateTree(children[1],val);
+    return myGenProg::evaluateTree(children[0],val)-myGenProg::evaluateTree(children[1],val);
 }
 
- double multiply(const std::vector<Node> &children,double val) {
-    return evaluateTree(children[0],val)*evaluateTree(children[1],val);
+double multiply(const std::vector< Node<double> > &children,std::vector<double> val) {
+    return myGenProg::evaluateTree(children[0],val)*myGenProg::evaluateTree(children[1],val);
 }
 
 
- double divide(const std::vector<Node> &children,double val) {
-    if (evaluateTree(children[1], val) == 0) {
+double divide(const std::vector< Node<double> > &children,std::vector<double> val) {
+    if (myGenProg::evaluateTree(children[1], val) == 0) {
         return 1;
     }
-    return evaluateTree(children[0],val)/evaluateTree(children[1],val);
+    return myGenProg::evaluateTree(children[0],val)/myGenProg::evaluateTree(children[1],val);
 }
 
-myGenProg<double> g;
+double aterm(const std::vector< Node<double> > &children, std::vector<double> val){
+    return val[0];
+}
 
 int main() {
     //mainLib();
+    myGenProg g;
+    g.values = {{1.0},{2.0},{3.0},{4.0},{5.0},{6.0},{7.0},{8.0},{9.0},{10.0},{11.0},{13.0},{15.0},{17.0},{19.0},{20.0},{24.0},{26.0},{28.0},{30.0},{33.0},{35.0},{37.0},{39.0},{40.0},{45.0},{50.0},{54.0},{61.0},{66.0},{67.0},{68.0},{76.0},{86.0}};
 
     g.populationSize = 100;
     g.generations = 50;
@@ -85,9 +64,9 @@ int main() {
 
     g.maxTreeHeight = 5;
 
-    g.terminals = std::vector<std::string> {"input1"};
+    g.terminals.emplace_back(aterm,0,0,"d");
 
-    g.functions = std::vector<Func> {};
+    //g.functions = std::vector<Func <double> > {};
     g.functions.emplace_back(plus,2,5,"+");
     g.functions.emplace_back(minus,1,2,"-");
     g.functions.emplace_back(multiply,2,2,"*");

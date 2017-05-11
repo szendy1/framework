@@ -4,32 +4,39 @@
 
 #include <string>
 #include <vector>
+#include <random>
 
-//int mainLib();
+template <typename T> class Node;
+template <typename T> class Func;
+template <typename T> class Log;
 
-class Node;
-class Func;
+template <typename T > class GenProg {
+private:
+    std::random_device  rd; // obtain a random number from hardware
+    std::mt19937        mt; // seed the generator
 
+    const int getRnd(int from, int to);
+    Node<T> fullTreeCreate();
+    Node<T> growTreeCreate();
+    const std::vector< Node<T> > growRecursively(const int depth, const Func<T> &func);
+    const std::vector< Node<T> > fullRecursively(const int depth, const Func<T> &func);
 
-class Log {
+    void performMutation(std::vector<Node<T>> &actualGeneration);
+    Node<T> mutate(const Node<T> &tree);
+    Node<T> findAndReplace(const Node<T> &tree,int num,int depth);
+
+    void performCrossover(std::vector<Node<T>> &actualGeneration);
+    std::pair<Node<T>, Node<T>> crossover(const Node<T> &tree1, const Node<T> &tree2);
+    std::pair<Node<T> &,int> getChildByNum(Node<T> &tree, int num);
+    Node<T> getRandomIndividual();
 
 public:
-    std::vector<std::vector<Node>> generations;
-    Log();
-    void Load();
-    void Load(const std::string &path);
-    void addGeneration(const std::vector<Node> &newGen);
-
-};
-
-template <typename values_t> class GenProg {
-public:
-    std::vector<Node> gen;
+    std::vector< Node<T> > gen;
     int populationSize;
     int generations;
 
-    std::vector<Func> functions;
-    std::vector<std::string> terminals;
+    std::vector< Func<T> > functions;
+    std::vector< Func<T> > terminals;
 
     double chanceFullTree;
 
@@ -38,64 +45,43 @@ public:
 
     int maxTreeHeight;
 
-    Log log;
-private:
+    Log<T> log;
 
-
-    const int getRnd(int from, int to);
-    Node crtFullTree();
-    Node crtGrowTree();
-    const std::vector<Node> recGrow(const int depth, const Func &func);
-    const std::vector<Node> recFull(const int depth, const Func &func);
-
-    void performMutation(std::vector<Node> &actualGeneration);
-    Node mutate(const Node &tree);
-    Node findAndReplace(const Node &tree,int num,int depth);
-
-    void performCrossover(std::vector<Node> &actualGeneration);
-    std::pair<Node, Node> crossover(const Node &tree1, const Node &tree2);
-    std::pair<Node &,int> findChildInTree(Node &tree, int num);
-    Node getRandomIndividual();
-
-
-public:
     GenProg();
     void perform();
-    void Initialization();
-    void Evaluation();
-    void Vary();
-    void FeedNewGeneration();
+    void initialize();
+    void evaluate();
+    void vary();
+    void selection();
 
-    void addfunction(const Func &func);
+    void addfunction(const Func<T> &func);
 
-    virtual double fitFunc(const Node &root) { return 0.0; };
+    virtual double fitFunc(const Node<T> &root) { return 0.0; };
 
 };
 
-class Func {
-    std::function<double(const std::vector<Node> &,double)> func;
-    int minChild;
-    int maxChild;
+template < typename T > class Func {
+    std::function<T(const std::vector<Node < T> > &, std::vector<T> ) >
+    func;
+    int minArity;
+    int maxArity;
     std::string repr;
 public:
-    Func(const std::function<double(const std::vector<Node> &,double)> &f, int minCh, int maxCh, const std::string &r);
-    Func();
-    const std::function<double(const std::vector<Node> &,double)> getFunc();
-    const int getMin() const;
-    const int getMax() const;
-    const std::string getRepr();
+    Func(const std::function< T(const std::vector< Node<T> > &, std::vector<T>) > &f, int minArity, int maxArity, const std::string &r );
+    const std::function<T(const std::vector< Node<T> > &, std::vector<T> ) > getFunc();
 
-//    Func(const Func &func) = default;
-//    Func(Func &&func) = default;
-//    Func& operator=(const Func&) = default;
-//    Func &operator=(Func &&func) = default;
+    const int getMinArity() const;
 
+    const int getMaxArity() const;
+
+    const std::string getRepr() const;
 };
 
-class Node {
+
+template <typename T> class Node {
 
     std::string data;
-    Func func;
+    Func<T> func;
 
     std::string infix();
 
@@ -104,26 +90,25 @@ class Node {
 
     double value;
 
-    std::vector<Node> children;
+    std::vector<Node<T>> children;
 
+    bool isTerm;
 public:
-    bool isTerm = false;
-    Node(const std::string &data);
-    Node(const Func &func);
+    Node(const Func<T> &func,bool term);
 
-    Node(const Func &data, const std::vector<Node> &nodes);
+    Node(const Func<T> &data, const std::vector<Node> &nodes);
 
-    Node(const Node &node) = default;
-    Node(Node &&node) = default;
+    Node(const Node<T> &node) = default;
+    Node(Node<T> &&node) = default;
 
-    Node& operator=(const Node&) = default;
-    Node &operator=(Node &&node) = default;
+    Node& operator=(const Node<T> &) = default;
+    Node &operator=(Node<T> &&node) = default;
 
     const std::string &getData() const;
-    const Func &getFunc() const;
+    const Func<T> &getFunc() const;
 
-    const std::vector<Node> &getChildren() const;
-    std::vector<Node> &getMutableChildren();
+    const std::vector<Node<T>> &getChildren() const;
+    std::vector<Node<T>> &getMutableChildren();
 
     int enumerate(int num);
 
@@ -139,13 +124,20 @@ public:
     const int getNodeNum() const;
     void resetNodeNum();
 
+    const bool isTerminal() const {return this->isTerm;};
 
-    void draw();
-    void draw(int level);
-    bool operator < (const Node& str) const
-    {
-        return (value > str.value);
-    }
+    bool operator < (const Node& str) const;
 
 };
+
+template <typename T> class Log {
+    std::vector<std::vector<Node<T> > > generations;
+public:
+    Log();
+    void addGeneration(const std::vector<Node<T>> &newGen);
+    std::vector<Node<T>> getGeneration(unsigned int index);
+    unsigned int getNumberOfGenerations();
+};
+
+
 #endif //FRAMEWORK_GENPROG_H
