@@ -16,14 +16,14 @@ public:
     Func(const std::function<double(const std::vector<Node> &,double)> &f, int minCh, int maxCh, const std::string &r);
     Func();
     const std::function<double(const std::vector<Node> &,double)> getFunc();
-    const int getMin();
-    const int getMax();
+    const int getMin() const;
+    const int getMax() const;
     const std::string getRepr();
 
-    Func(const Func &func) = default;
-    Func(Func &&func) = default;
-    Func& operator=(const Func&) = default;
-    Func &operator=(Func &&func) = default;
+//    Func(const Func &func) = default;
+//    Func(Func &&func) = default;
+//    Func& operator=(const Func&) = default;
+//    Func &operator=(Func &&func) = default;
 
 };
 

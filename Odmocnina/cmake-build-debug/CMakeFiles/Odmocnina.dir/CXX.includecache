@@ -12,7 +12,7 @@ string
 vector
 -
 
-C:/Users/Alexander/Documents/Git/framework/Odmocnina/main.cpp
+/home/ifrag/downloads/szendy/framework/Odmocnina/main.cpp
 iostream
 -
 vector
@@ -22,5 +22,5 @@ cmath
 functional
 -
 genprog.h
-C:/Users/Alexander/Documents/Git/framework/Odmocnina/genprog.h
+/home/ifrag/downloads/szendy/framework/Odmocnina/genprog.h
 

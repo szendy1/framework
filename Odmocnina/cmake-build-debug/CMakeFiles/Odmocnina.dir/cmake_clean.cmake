@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Odmocnina.dir/main.cpp.obj"
+  "CMakeFiles/Odmocnina.dir/main.cpp.o"
   "Odmocnina.pdb"
-  "Odmocnina.exe"
-  "Odmocnina.exe.manifest"
-  "libOdmocnina.dll.a"
+  "Odmocnina"
 )
 
 # Per-language clean rules from dependency scanning.

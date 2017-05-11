@@ -8,86 +8,84 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug"/>
+				<Option working_dir="/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Odmocnina">
-				<Option output="C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Odmocnina.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="C:/Users/Alexander/Documents/Git/framework/Odmocnina/include"/>
-					<Add directory="C:/MinGW/include"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/x86_64-w64-mingw32"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/backward"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/include"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../x86_64-w64-mingw32/include"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 Odmocnina"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Odmocnina/fast">
-				<Option output="C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Odmocnina.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="C:/Users/Alexander/Documents/Git/framework/Odmocnina/include"/>
-					<Add directory="C:/MinGW/include"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/x86_64-w64-mingw32"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/backward"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/include"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed"/>
-					<Add directory="c:\mingw\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../x86_64-w64-mingw32/include"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 Odmocnina/fast"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug"/>
+				<Option working_dir="/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Alexander/Documents/Git/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Odmocnina">
+				<Option output="/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Odmocnina" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/ifrag/downloads/szendy/framework/Odmocnina/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include/g++-v5"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include/g++-v5/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include/g++-v5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 Odmocnina"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Odmocnina/fast">
+				<Option output="/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Odmocnina" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/ifrag/downloads/szendy/framework/Odmocnina/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include/g++-v5"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include/g++-v5/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include/g++-v5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/5.4.0/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 Odmocnina/fast"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Alexander/Documents/Git/framework/Odmocnina/main.cpp">
+		<Unit filename="/home/ifrag/downloads/szendy/framework/Odmocnina/main.cpp">
 			<Option target="Odmocnina"/>
 		</Unit>
-		<Unit filename="C:/Users/Alexander/Documents/Git/framework/Odmocnina/CMakeLists.txt">
+		<Unit filename="/home/ifrag/downloads/szendy/framework/Odmocnina/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

@@ -8,12 +8,11 @@ Func::Func(const std::function<double(const std::vector<Node> &,double)> &f, int
 Func::Func()
 {}
 
-
 const std::function<double(const std::vector<Node> &,double)> Func::getFunc() {return this->func;}
 
-const int Func::getMin() {return this->minChild;}
+const int Func::getMin() const {return this->minChild;}
 
-const int Func::getMax() {return this->maxChild;}
+const int Func::getMax() const {return this->maxChild;}
 
 const std::string Func::getRepr() {return this->repr;}
 

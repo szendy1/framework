@@ -44,8 +44,8 @@ private:
     const int getRnd(int from, int to);
     Node crtFullTree();
     Node crtGrowTree();
-    const std::vector<Node> recGrow(const int depth, Func func);
-    const std::vector<Node> recFull(const int depth, Func func);
+    const std::vector<Node> recGrow(const int depth, const Func &func);
+    const std::vector<Node> recFull(const int depth, const Func &func);
 
     void performMutation(std::vector<Node> &actualGeneration);
     Node mutate(const Node &tree);
@@ -338,7 +338,7 @@ template<typename values_t> Node GenProg<values_t>::crtGrowTree(){
     return Node(functions[index],recGrow(1,functions[index]));
 }
 
-template<typename values_t> const std::vector<Node> GenProg<values_t>::recGrow(const int depth, Func func){
+template<typename values_t> const std::vector<Node> GenProg<values_t>::recGrow(const int depth, const Func &func){
     int child = getRnd( func.getMin(), func.getMax()+1);
     std::vector<Node> children = std::vector<Node>{};
     if (depth == maxTreeHeight ){
@@ -370,7 +370,7 @@ template<typename values_t> Node GenProg<values_t>::crtFullTree(){
 }
 
 
-template<typename values_t> const std::vector<Node> GenProg<values_t>::recFull(const int depth,Func func){
+template<typename values_t> const std::vector<Node> GenProg<values_t>::recFull(const int depth, const Func &func){
     int child = getRnd( func.getMin(), func.getMax()+1);
     std::vector<Node> children = std::vector<Node>{};
     if (depth >= maxTreeHeight ){
@@ -415,6 +415,6 @@ template<typename values_t> void GenProg<values_t>::performCrossover(std::vector
 }
 
 
-template <typename values_t> void GenProg<values_t>::addfunction(const Func & func){
+template <typename values_t> void GenProg<values_t>::addfunction(const Func &func){
     this->functions.push_back(func);
 }
