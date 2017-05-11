@@ -1,1 +1,0 @@
-/usr/bin/c++   -g   CMakeFiles/Odmocnina.dir/main.cpp.o  -o Odmocnina  -L/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug -Wl,-rpath,/home/ifrag/downloads/szendy/framework/Odmocnina/cmake-build-debug -lframework 

@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -g  -shared -Wl,-soname,libframework.so -o libframework.so CMakeFiles/framework.dir/main.cpp.o CMakeFiles/framework.dir/src/Node.cpp.o CMakeFiles/framework.dir/src/Log.cpp.o CMakeFiles/framework.dir/src/Generation.cpp.o CMakeFiles/framework.dir/src/GenProg.cpp.o CMakeFiles/framework.dir/src/Func.cpp.o 
