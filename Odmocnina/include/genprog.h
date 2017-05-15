@@ -12,6 +12,22 @@ template <typename T> class Func;
 template <typename T> class Log;
 
 template <typename T > class GenProg {
+public:
+    std::vector< Node<T> > gen;
+    int populationSize;
+    int generations;
+
+    std::vector< Func<T> > functions;
+    std::vector< Func<T> > terminals;
+
+    double chanceFullTree;
+
+    double mutationChance;
+    double crossoverChance;
+
+    int maxTreeHeight;
+
+    Log<T> log;
 private:
     std::random_device  rd; // obtain a random number from hardware
     std::mt19937        mt; // seed the generator
@@ -31,23 +47,8 @@ private:
     std::pair<Node<T> &,int> getChildByNum(Node<T> &tree, int num);
     Node<T> getRandomIndividual();
 
+
 public:
-    std::vector< Node<T> > gen;
-    int populationSize;
-    int generations;
-
-    std::vector< Func<T> > functions;
-    std::vector< Func<T> > terminals;
-
-    double chanceFullTree;
-
-    double mutationChance;
-    double crossoverChance;
-
-    int maxTreeHeight;
-
-    Log<T> log;
-
     GenProg();
     void perform();
     void initialize();
@@ -62,20 +63,17 @@ public:
 };
 
 template < typename T > class Func {
-    std::function<T(const std::vector<Node < T> > &, std::vector<T> ) >
-    func;
+    std::function< T (const std::vector< Node<T> > &, std::vector< T > ) > func;
     int minArity;
     int maxArity;
     std::string repr;
 public:
-    Func(const std::function< T(const std::vector< Node<T> > &, std::vector<T>) > &f, int minArity, int maxArity, const std::string &r );
-    const std::function<T(const std::vector< Node<T> > &, std::vector<T> ) > getFunc();
+    Func(const std::function< T (const std::vector< Node<T> > &, std::vector< T > ) > &f, int minArity, int maxArity, const std::string &r);
+    const std::function< T (const std::vector< Node<T> > &, std::vector< T > ) > &getFunc(){ return this->func; };
+    const int getMinArity() const { return this->minArity; };
+    const int getMaxArity() const { return this->maxArity; };
+    const std::string &getRepr() const{ return this->repr; };
 
-    const int getMinArity() const;
-
-    const int getMaxArity() const;
-
-    const std::string getRepr() const;
 };
 
 

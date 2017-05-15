@@ -66,6 +66,7 @@ public:
 
 };
 
+template class GenProg<double>;
 
 #endif //FRAMEWORK_GENPROG_H
 

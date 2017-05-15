@@ -148,4 +148,6 @@ template <typename T > int Node<T>::enumerate(int num) {
     return num;
 }
 
+template class Node<double>;
+
 #endif //FRAMEWORK_NODE_H

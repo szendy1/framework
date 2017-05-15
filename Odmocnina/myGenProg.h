@@ -8,18 +8,18 @@
 template <typename T > class Func;
 template <typename T > class GenProg;
 
-template <typename T> class myGenProg : public GenProg<T>{
+class myGenProg : public GenProg<double>{
 public:
-    std::vector< std::vector<T> > values;
-    double fitFunc(const Node<T> &root) override;
-    static double evaluateTree(const Node<double> &child, std::vector<double> val){
+    std::vector< std::vector<double> > values;
+    double fitFunc(const Node<double> &root) override;
+    static double evaluateTree(const Node<double> &child, const std::vector<double> &val){
         auto f = child.getFunc();
         return f.getFunc()(child.getChildren(),val);
     };
 
 };
 
-template <typename T> double myGenProg<T>::fitFunc(const Node<T> &root) {
+double myGenProg::fitFunc(const Node<double> &root) {
     double res = 0.0;
     for (int i =0 ; i < values.size();i++){
         values[i];
