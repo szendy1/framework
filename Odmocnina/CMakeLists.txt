@@ -4,7 +4,7 @@ project(Odmocnina)
 set(CMAKE_CXX_STANDARD 11)
 
 link_directories(${CMAKE_BINARY_DIR})
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp myGenProg.h include/genprog.h)
 
 add_executable(Odmocnina ${SOURCE_FILES})
 

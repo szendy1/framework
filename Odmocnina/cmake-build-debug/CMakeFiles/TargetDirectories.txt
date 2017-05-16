@@ -1,3 +1,0 @@
-C:/Users/alexa/OneDrive/Bakalarka/code/Odmocnina/cmake-build-debug/CMakeFiles/Odmocnina.dir
-C:/Users/alexa/OneDrive/Bakalarka/code/Odmocnina/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/alexa/OneDrive/Bakalarka/code/Odmocnina/cmake-build-debug/CMakeFiles/rebuild_cache.dir

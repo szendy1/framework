@@ -4,24 +4,21 @@
 
 #include <string>
 #include <vector>
+#include <random>
+#include <functional>
 
-//int mainLib();
+template <typename T> class Node;
+template <typename T> class Func;
+template <typename T> class Log;
 
-class Node;
-class Func;
-
-
-class GenProg {
+template <typename T > class GenProg {
 public:
-    //Variables
-    std::vector<Node> gen;
+    std::vector< Node<T> > gen;
     int populationSize;
     int generations;
 
-    std::vector<Func> function;
-    std::vector<std::string> terminals;
-
-    std::vector<double> values;
+    std::vector< Func<T> > functions;
+    std::vector< Func<T> > terminals;
 
     double chanceFullTree;
 
@@ -30,29 +27,116 @@ public:
 
     int maxTreeHeight;
 
-    //Functions
+    Log<T> log;
+private:
+    std::random_device  rd; // obtain a random number from hardware
+    std::mt19937        mt; // seed the generator
 
+    const int getRnd(int from, int to);
+    Node<T> fullTreeCreate();
+    Node<T> growTreeCreate();
+    const std::vector< Node<T> > growRecursively(const int depth, const Func<T> &func);
+    const std::vector< Node<T> > fullRecursively(const int depth, const Func<T> &func);
+
+    void performMutation(std::vector<Node<T>> &actualGeneration);
+    Node<T> mutate(const Node<T> &tree);
+    Node<T> findAndReplace(const Node<T> &tree,int num,int depth);
+
+    void performCrossover(std::vector<Node<T>> &actualGeneration);
+    std::pair<Node<T>, Node<T>> crossover(const Node<T> &tree1, const Node<T> &tree2);
+    std::pair<Node<T> &,int> getChildByNum(Node<T> &tree, int num);
+    Node<T> getRandomIndividual();
+
+
+public:
+    GenProg();
     void perform();
-    void Initialization();
-    void Evaluation();
-    void Vary();
-    void FeedNewGeneration();
+    void initialize();
+    void evaluate();
+    void vary();
+    void selection();
 
-    virtual double fitFunc(const Node &root);
+    void addfunction(const Func<T> &func);
+
+    virtual double fitFunc(const Node<T> &root) { return 0.0; };
 
 };
 
-class Func{
+template < typename T > class Func {
+    std::function< T (const std::vector< Node<T> > &, std::vector< T > ) > func;
+    int minArity;
+    int maxArity;
+    std::string repr;
 public:
-    Func(const std::function<double(const std::vector<Node> &,double)> &f, int minCh, int maxCh, const std::string &r);
-    const std::function<double(const std::vector<Node> &,double)> getFunc();
+    Func(const std::function< T (const std::vector< Node<T> > &, std::vector< T > ) > &f, int minArity, int maxArity, const std::string &r);
+    const std::function< T (const std::vector< Node<T> > &, std::vector< T > ) > &getFunc(){ return this->func; };
+    const int getMinArity() const { return this->minArity; };
+    const int getMaxArity() const { return this->maxArity; };
+    const std::string &getRepr() const{ return this->repr; };
+
 };
 
-class Node{
-public:
-    const std::vector<Node> &getChildren() const;
-    const Func &getFunc() const;
+
+template <typename T> class Node {
+
+    std::string data;
+    Func<T> func;
+
+    std::string infix();
+
+    int numNodes;
+    int myNum;
+
+    double value;
+
+    std::vector<Node<T>> children;
+
     bool isTerm;
+public:
+    Node(const Func<T> &func,bool term);
+
+    Node(const Func<T> &data, const std::vector<Node> &nodes);
+
+    Node(const Node<T> &node) = default;
+    Node(Node<T> &&node) = default;
+
+    Node& operator=(const Node<T> &) = default;
+    Node &operator=(Node<T> &&node) = default;
+
+    const std::string &getData() const;
+    const Func<T> &getFunc() const;
+
+    const std::vector<Node<T>> &getChildren() const;
+    std::vector<Node<T>> &getMutableChildren();
+
+    int enumerate(int num);
+
+    int height();
+    std::string toString();
+    void addChild(const Node &child);
+    void setChildren(const std::vector<Node> &child);
+
+    const double getValue() const;
+    void setValue(const double &val);
+
+    const int getLineageSize() const;
+    const int getNodeNum() const;
+    void resetNodeNum();
+
+    const bool isTerminal() const {return this->isTerm;};
+
+    bool operator < (const Node& str) const;
 
 };
+
+template <typename T> class Log {
+    std::vector<std::vector<Node<T> > > generations;
+public:
+    Log();
+    void addGeneration(const std::vector<Node<T>> &newGen);
+    std::vector<Node<T>> getGeneration(unsigned int index);
+    unsigned int getNumberOfGenerations();
+};
+
+
 #endif //FRAMEWORK_GENPROG_H
