@@ -2,8 +2,8 @@
 #define FRAMEWORK_LOG_H
 
 #include "Node.h"
-#include <cairo/cairo.h>
-#include <gtk-2.0/gtk/gtk.h>
+#include <cairo.h>
+#include "gtk/gtk.h"
 
 template <typename T> class Log {
     std::vector<std::vector<Node<T> > > generations;

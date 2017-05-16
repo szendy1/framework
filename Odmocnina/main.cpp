@@ -76,5 +76,7 @@ int main() {
 
     g.perform();
 
+    log;
+
     return 0;
 }

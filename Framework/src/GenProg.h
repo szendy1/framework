@@ -113,7 +113,6 @@ template<typename T > void GenProg<T >::initialize(){
     std::cout << "init started" << std::endl;
 
     for (int i=0;i<populationSize;i++){
-        std::cout << functions.size() << std::endl;
         this->gen.push_back(fullTreeCreate());
     }
 
@@ -170,7 +169,7 @@ template<typename T > void GenProg<T >::vary() {
 
 template<typename T > void GenProg<T >::selection() {
     std::vector<Node<T>> newGeneration= std::vector<Node<T>>{};
-    for (unsigned i= 0; i<generations;i++){
+    for (unsigned i= 0; i<populationSize;i++){
         newGeneration.push_back(gen[i]);
     }
     gen = newGeneration;
