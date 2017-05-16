@@ -53,3 +53,7 @@ Odmocnina/cmake-build-debug/
 
 ## File-based project format:
 *.iws
+
+## .idea workspace
+**/.idea/workspace.xml
+**/.idea/tasks.xml
