@@ -8,7 +8,7 @@
 template <typename T > class Func;
 template <typename T > class GenProg;
 
-class myGenProg : public GenProg<double>{
+class SquareRoot : public GenProg<double>{
 public:
     std::vector< std::vector<double> > values;
     double fitFunc(const Node<double> &root) override;
@@ -19,7 +19,7 @@ public:
 
 };
 
-double myGenProg::fitFunc(const Node<double> &root) {
+double SquareRoot::fitFunc(const Node<double> &root) {
     double res = 0.0;
     for (int i =0 ; i < values.size();i++){
         values[i];

@@ -12,13 +12,11 @@ template <typename T> class Func;
 template <typename T> class Log;
 
 template <typename T > class GenProg {
-public:
+private:
     std::vector< Node<T> > gen;
+
     int populationSize;
     int generations;
-
-    std::vector< Func<T> > functions;
-    std::vector< Func<T> > terminals;
 
     double chanceFullTree;
 
@@ -28,7 +26,7 @@ public:
     int maxTreeHeight;
 
     Log<T> log;
-private:
+
     std::random_device  rd; // obtain a random number from hardware
     std::mt19937        mt; // seed the generator
 
@@ -56,7 +54,26 @@ public:
     void vary();
     void selection();
 
-    void addfunction(const Func<T> &func);
+    std::vector< Func<T> > functions;
+    std::vector< Func<T> > terminals;
+
+    void setPopulationSize(int size);
+    void setGenerationsLimit(int limit);
+
+    void setFullMethodChance(int chance);
+    void setGrowMethodChance(int chance);
+
+    void setMutationChance(int chance);
+    void setCrossoverChance(int chance);
+
+    void setMaxTreeHeight(int height);
+
+    /*void addFunction(const Func<T> &func);
+    void setFunctions(const std::vector< Func<T> > &func);
+
+    void addTerminal(const Func<T> &term);
+    void setTerminals(const std::vector< Func<T> > &term);
+    */
 
     virtual double fitFunc(const Node<T> &root) { return 0.0; };
 

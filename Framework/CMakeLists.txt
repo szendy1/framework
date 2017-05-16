@@ -8,7 +8,7 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 find_package(PkgConfig)
 
 pkg_check_modules(CAIRO REQUIRED cairo)
-pkg_check_modules(GTK REQUIRED gtk+-2.0)
+pkg_check_modules(GTK REQUIRED gtk+-3.0)
 
 
 set(SOURCE_FILES main.cpp src/Node.h src/Log.h src/GenProg.h src/Func.h)
