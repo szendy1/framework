@@ -10,7 +10,7 @@
 
 
 template <typename T> class Node {
-
+private:
     std::string data;
     Func<T> func;
 
@@ -19,7 +19,9 @@ template <typename T> class Node {
     int numNodes;
     int myNum;
 
-    double value;
+    double fitness;
+    double normalizedFitness;
+    double accumulatedNormalizedFitness;
 
     std::vector<Node<T>> children;
 
@@ -43,13 +45,17 @@ public:
 
     int enumerate(int num);
 
-    int height();
+    const int height() const;
     std::string toString();
     void addChild(const Node &child);
     void setChildren(const std::vector<Node> &child);
 
-    const double getValue() const;
-    void setValue(const double &val);
+    const double getFitness() const;
+    const double getNormalizedFitness() const;
+    const double getAccumulatedNormalizedFitness() const;
+    void setFitness(const double &fit);
+    void setNormalizedFitness(const double &fit);
+    void setAccumulatedNormalizedFitness(const double &fit);
 
     const int getLineageSize() const;
     const int getNodeNum() const;
@@ -57,9 +63,9 @@ public:
 
     const bool isTerminal() const {return this->isTerm;};
 
-    bool operator < (const Node& str) const
+    bool operator < (const Node& other) const
     {
-        return (value > str.value);
+        return (this->normalizedFitness > other.normalizedFitness);
     }
 
 };
@@ -70,7 +76,7 @@ template <typename T > Node<T>::Node(const Func<T> &func,bool term)
 {
     myNum= 0;
     numNodes=0;
-    value= 0.0;
+    fitness= 0.0;
 }
 
 template <typename T > Node<T>::Node(const Func<T> &data, const std::vector<Node<T> > &children)
@@ -78,7 +84,7 @@ template <typename T > Node<T>::Node(const Func<T> &data, const std::vector<Node
 {
     myNum= 0;
     numNodes=0;
-    value= 0.0;
+    fitness= 0.0;
 }
 
 template <typename T > void Node<T>::addChild(const Node<T> &child){  this->children.push_back(child); }
@@ -93,9 +99,17 @@ template <typename T > const std::string &Node<T>::getData() const{ return func.
 
 template <typename T > const Func<T> &Node<T>::getFunc() const{ return this->func; }
 
-template <typename T > void Node<T>::setValue(const double &val) { this->value=val; }
+template <typename T > void Node<T>::setFitness(const double &fit) { this->fitness=fit; }
 
-template <typename T > const double Node<T>::getValue() const{ return this->value; }
+template <typename T > void Node<T>::setNormalizedFitness(const double &fit) { this->normalizedFitness=fit; }
+
+template <typename T > void Node<T>::setAccumulatedNormalizedFitness(const double &fit) { this->accumulatedNormalizedFitness = fit; }
+
+template <typename T > const double Node<T>::getFitness() const{ return this->fitness; }
+
+template <typename T > const double Node<T>::getNormalizedFitness() const { return this->normalizedFitness; }
+
+template <typename T > const double Node<T>::getAccumulatedNormalizedFitness() const { return this->accumulatedNormalizedFitness; }
 
 template <typename T > const int Node<T>::getLineageSize() const{ return this->numNodes; }
 
@@ -104,7 +118,7 @@ template <typename T > const int Node<T>::getNodeNum() const{ return this->myNum
 template <typename T > void Node<T>::resetNodeNum() { this->myNum=0; this->numNodes=0;}
 
 
-template <typename T > int Node<T>::height(){
+template <typename T > const int Node<T>::height() const {
     if (isTerm){
         return 1;
     }
@@ -125,13 +139,15 @@ template <typename T > std::string Node<T>::toString(){
 
 template <typename T > std::string Node<T>::infix(){
     if (isTerm) {
-        return data;
+        return getFunc().getRepr();
     }
     std::stringstream ss;
-    ss<< data;
+    ss<< getFunc().getRepr();
+    ss<< "(" ;
     for (int i = 0; i < children.size(); i++) {
         ss << children[i].infix() << " " ;
     }
+    ss<< ")";
     return ss.str();
 
 }

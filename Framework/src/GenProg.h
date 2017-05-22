@@ -167,13 +167,13 @@ template<typename T > void GenProg<T >::evaluate() {
         if (val!=val){
             std::cerr << "NaN" << std::endl;
         }
-        gen[i].setValue(val);
+        gen[i].setFitness(val);
         sumValue+=val;
     }
     std::sort(gen.begin(),gen.end());
     double actualSum = 0.0;
     for (int i=0;i<gen.size();i++){
-        double val = gen[i].getValue();
+        double val = gen[i].getFitness();
         if (val!=val){
             std::cerr << "NaN next" << std::endl;
         }
@@ -181,8 +181,8 @@ template<typename T > void GenProg<T >::evaluate() {
         if (actualSum!=actualSum){
             std::cerr << "NaN Sum" << std::endl;
         }
-        gen[i].setValue(actualSum/sumValue);
-        if (gen[i].getValue()!=gen[i].getValue()){
+        gen[i].setFitness(actualSum/sumValue);
+        if (gen[i].getFitness()!=gen[i].getFitness()){
             std::cerr << actualSum << std::endl;
             std::cerr << val << std::endl;
             std::cerr << "NaN Value" << std::endl;
@@ -398,7 +398,7 @@ template<typename T > Node<T> GenProg<T>::getRandomIndividual() {
     std::uniform_real_distribution<> distr(0,std::nextafter(1, DBL_MAX));
     double rnd = distr(mt);
     for (unsigned i =0;i<gen.size();i++){
-        if (gen[i].getValue()>rnd){
+        if (gen[i].getFitness()>rnd){
             return gen[i];
         }
     }

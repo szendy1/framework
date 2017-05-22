@@ -10,244 +10,344 @@
 #include <algorithm>
 #include <random>
 #include <cfloat>
+#include <thread>
+#include <mutex>
 
 #include "Log.h"
 #include "Node.h"
 #include "Func.h"
 
-template <typename T > class GenProg {
-private:
-    std::vector< Node<T> > gen;
 
-    int populationSize;
-    int generationsLimit;
-
-
-    double chanceFullTree;
-    double chanceGrowTree;
-
-
-    double mutationChance;
-    double crossoverChance;
-
-    int numberOfAttempts;
-
-    int maxTreeHeight;
-
-    Log<T> log;
-
-    std::random_device  rd;
-    std::mt19937        mt;
-
-    const int getRnd(int from, int to);
-    Node<T> fullTreeCreate();
-    Node<T> growTreeCreate();
-    const std::vector< Node<T> > growRecursively(const int depth, const Func<T> &func);
-    const std::vector< Node<T> > fullRecursively(const int depth, const Func<T> &func);
-
-    void performMutation(std::vector<Node<T>> &actualGeneration);
-    Node<T> mutate(const Node<T> &tree);
-    Node<T> findAndReplace(const Node<T> &tree,int num,int depth);
-
-    void performCrossover(std::vector<Node<T>> &actualGeneration);
-    std::pair<Node<T>, Node<T>> crossover(const Node<T> &tree1, const Node<T> &tree2);
-    std::pair<Node<T> &,int> getChildByNum(Node<T> &tree, int num);
-    Node<T> getRandomIndividual();
-
-
+template<typename T>
+class GenProg {
 public:
+    static constexpr char *fullInitializationMethod = (char*)"full";
+    static constexpr char *growInitializationMethod = (char*)"grow";
+
     GenProg();
-    void perform();
-    void initialize();
-    void evaluate();
-    void vary();
-    void selection();
 
-    std::vector< Func<T> > functions;
-    std::vector< Func<T> > terminals;
+    virtual void perform();
 
-    void setPopulationSize(int size);
-    void setGenerationsLimit(int limit);
+    virtual void initialize();
 
-    void setFullMethodChance(int chance);
-    void setGrowMethodChance(int chance);
+    virtual void evaluate();
 
-    void setMutationChance(int chance);
-    void setCrossoverChance(int chance);
+    virtual void vary();
 
-    void setNumberOfAttempts(int num);
+    virtual void selection();
 
-    void setMaxTreeHeight(int height);
+    std::vector<Func<T> > functions;
+    std::vector<Func<T> > terminals;
+
+    void setPopulationSize(unsigned size);
+
+    void setGenerationsLimit(unsigned limit);
+
+    void setInitializationMethod(std::string method);
+
+    void setMutationProbability(unsigned probability);
+
+    void setCrossoverProbability(unsigned probability);
+
+    void setNumberOfAttempts(unsigned num);
+
+    void setMaxTreeHeight(unsigned height);
 
     const Log<T> &getLog() const;
 
-    /*void addFunction(const Func<T> &func)   { this->functions.push_back(func); };
-    void setFunctions(const std::vector< Func<T> > &func)
-                                            { this->functions = func; };
+    void addFunction(const Func<T> &func);
 
-    void addTerminal(const Func<T> &term)   {this->terminals.push_back(term); };
-    void setTerminals(const std::vector< Func<T> > &term)
-                                            { this->terminals = term; };
-    */
+    void setFunctions(const std::vector<Func<T> > &func);
+
+    void addTerminal(const Func<T> &term);
+
+    void setTerminals(const std::vector<Func<T> > &term);
+
+    void setReversedFitness(bool isReversed);
+
 
     virtual double fitFunc(const Node<T> &root) { return 0.0; };
 
+    void evaluateIndividual(int i);
+
+private:
+    std::mutex m;
+
+    std::vector<Node<T> > lastGeneration;
+    std::vector<Node<T> > currentGeneration;
+
+    unsigned generation;
+
+    unsigned populationSize;
+    unsigned generationsLimit;
+
+    std::string initMethod = fullInitializationMethod;
+
+    unsigned mutationProbability;
+    unsigned crossoverProbability;
+
+    unsigned numberOfAttempts;
+
+    unsigned maxTreeHeight;
+
+    bool reversedFitness = false;
+
+    Log<T> log;
+
+    //Random generator
+    std::random_device rd;
+    std::mt19937 mt = std::mt19937(rd()); // seed the generator
+    int getRnd(int from, int to);
+
+    Node<T> fullTreeCreate();
+
+    Node<T> growTreeCreate();
+
+    const std::vector<Node<T> > growRecursively(const int depth, const Func<T> &func);
+
+    const std::vector<Node<T> > fullRecursively(const int depth, const Func<T> &func);
+
+    void performMutation();
+
+    Node<T> mutate(const Node<T> &tree);
+
+    Node<T> findAndReplace(const Node<T> &tree, int num, int depth);
+
+    void performCrossover();
+
+    std::pair<Node<T>, Node<T>> crossover(const Node<T> &tree1, const Node<T> &tree2);
+
+    std::pair<Node<T> &, int> getChildByNum(Node<T> &tree, int num);
+
+    Node<T> getRandomIndividual();
+
+    void createIndividual();
 };
 
-template class GenProg<double>;
+template
+class GenProg<double>;
 
 #endif //FRAMEWORK_GENPROG_H
 
 
-template<typename T > GenProg<T >::GenProg(){
-    mt = std::mt19937 (rd()); // seed the generator
+template<typename T>
+GenProg<T>::GenProg() {
+    lastGeneration = std::vector<Node<T> >{};
+    currentGeneration = std::vector<Node<T>>{};
 
-    gen = std::vector< Node<T> >{};
+    generation = 0;
+
     populationSize = 0;
     generationsLimit = 0;
 
-    functions = std::vector< Func<T> > {};
-    terminals = std::vector< Func<T> > {};
+    functions = std::vector<Func<T> > {};
+    terminals = std::vector<Func<T> > {};
 
-    mutationChance = 100;
-    crossoverChance = 0;
+    mutationProbability = 100;
+    crossoverProbability = 0;
 
     maxTreeHeight = 3;
 
     log = Log<T>();
 }
 
-template<typename T > void GenProg<T>::perform(){
+template<typename T>
+void GenProg<T>::perform() {
     if (!populationSize ||
         !generationsLimit ||
         functions.empty() ||
-        terminals.empty() ){
-        std::cout << "Values not initialized !" << std::endl;
+        terminals.empty()) {
+        std::cerr << "Values not initialized !" << std::endl;
         return;
     }
     this->initialize();
     this->evaluate();
-    log.addGeneration(gen);
+    generation = 0;
 
-    std::cout << "init successful" << std::endl;
+    while (generation < generationsLimit) {
+        generation++;
 
-    int tmp = 0;
-    std::cout<< "Evolution Cycle" << std::endl;
-    while (log.getNumberOfGenerations()<generationsLimit){
-
-        //std::cout<< "Vary Cycle" << std::endl;
         this->vary();
 
-        std::cout << "eval started : " << tmp << std::endl;
+        std::cout << "eval started : " << generation << std::endl;
         this->evaluate();
 
-        //std::cout<< "Selection Cycle" << std::endl;
         this->selection();
-        tmp++;
     }
-
+    std::cout << currentGeneration[0].toString() << std::endl;
 }
 
-template<typename T > void GenProg<T >::initialize(){
+template<typename T>
+void GenProg<T>::initialize() {
     std::cout << "init started" << std::endl;
-
-    for (int i=0;i<populationSize;i++){
-        this->gen.push_back(fullTreeCreate());
+    std::vector<std::thread> threads;
+    /*for (unsigned i = 0; i < populationSize; i++) {
+        std::thread newT(&GenProg<T>::createIndividual, this);
+        threads.push_back(std::move(newT));
     }
 
-    std::cout << "init succeed" << std::endl;
-}
-
-template<typename T > void GenProg<T >::evaluate() {
-    //std::cout << "eval started" << std::endl;
-    double sumValue =0.0;
-    for (int i=0;i<gen.size();i++){
-        gen[i].enumerate(1);
-        double val = fitFunc(gen[i]);
-        if (val!=val){
-            std::cerr << "NaN" << std::endl;
-        }
-        gen[i].setValue(val);
-        sumValue+=val;
-    }
-    std::sort(gen.begin(),gen.end());
-    double actualSum = 0.0;
-    for (int i=0;i<gen.size();i++){
-        double val = gen[i].getValue();
-        if (val!=val){
-            std::cerr << "NaN next" << std::endl;
-        }
-        actualSum+= val;
-        if (actualSum!=actualSum){
-            std::cerr << "NaN Sum" << std::endl;
-        }
-        gen[i].setValue(actualSum/sumValue);
-        if (gen[i].getValue()!=gen[i].getValue()){
-            std::cerr << actualSum << std::endl;
-            std::cerr << val << std::endl;
-            std::cerr << "NaN Value" << std::endl;
-        }
+    for (unsigned i = 0; i < threads.size(); i++) {
+        threads[i].join();
+    }*/
+    for (unsigned i= 0;i<populationSize;i++){
+        createIndividual();
     }
 
-    //std::cout << "eval succeed" << std::endl;
+    log.addGeneration(currentGeneration);
+    lastGeneration = currentGeneration;
 }
 
 
-template<typename T > void GenProg<T >::vary() {
-    std::vector<Node<T>> newGeneration = gen;
-    while (newGeneration.size()<populationSize*2){
-        int randomNum = getRnd(0,mutationChance+crossoverChance);
-        if (newGeneration.size()==populationSize*2-1){
-            performMutation(newGeneration);
+template<typename T>
+void GenProg<T>::createIndividual() {
+    if (initMethod == fullInitializationMethod) {
+        Node<T> newNode = fullTreeCreate();
+        m.lock();
+        this->currentGeneration.push_back(newNode);
+        m.unlock();
+    } else {
+        Node<T> newNode = growTreeCreate();
+        m.lock();
+        this->currentGeneration.push_back(newNode);
+        m.unlock();
+    }
+}
+
+
+template<typename T>
+void GenProg<T>::evaluate() {
+    //count fitness based on user-defined fitness function
+    std::vector<std::thread> threads;
+    for (unsigned i = 0; i < currentGeneration.size(); i++) {
+        std::thread newT(&GenProg<T>::evaluateIndividual, this, i);
+        threads.push_back(std::move(newT));
+    }
+    for (unsigned i = 0; i < threads.size(); i++) {
+        threads[i].join();
+    }
+    //count normalized fitness for each Individual
+    double fitnessSum = 0.0;
+    for (unsigned i = 0; i < currentGeneration.size(); i++) {
+        fitnessSum += currentGeneration[i].getFitness();
+    }
+    for (unsigned i = 0; i < currentGeneration.size(); i++) {
+        double fitness = currentGeneration[i].getFitness();
+        double normalizedFitness = fitness / fitnessSum;
+        currentGeneration[i].setNormalizedFitness(normalizedFitness);
+    }
+    if (!reversedFitness){
+        std::vector<double> adjustedFitness;
+        double adjustedSum = 0.0;
+        for (unsigned i = 0; i < currentGeneration.size(); i++){
+            adjustedFitness.push_back(1/(1+currentGeneration[i].getNormalizedFitness()));
+            adjustedSum+=(1/(1+currentGeneration[i].getNormalizedFitness()));
         }
-        else if (mutationChance<crossoverChance){
-            if (randomNum<=mutationChance){
-                performMutation(newGeneration);
-            }
-            else{
-                performCrossover(newGeneration);
+        for (unsigned i=0; i < currentGeneration.size();i++){
+            double normalizedFitness = adjustedFitness[i] / adjustedSum;
+            currentGeneration[i].setNormalizedFitness(normalizedFitness);
+        }
+    }
+    std::sort(currentGeneration.begin(), currentGeneration.end());
+    //count acumulated fitness
+    double accumulatedSum = 0.0;
+    for (unsigned i = 0; i < currentGeneration.size(); i++) {
+        double val = currentGeneration[i].getNormalizedFitness();
+        accumulatedSum += val;
+        currentGeneration[i].setAccumulatedNormalizedFitness(accumulatedSum);
+    }
+
+    //std::cout << currentGeneration[0].getAccumulatedNormalizedFitness() << std::endl;
+    //std::cout << currentGeneration[99].getAccumulatedNormalizedFitness() << std::endl;
+}
+
+template<typename T>
+void GenProg<T>::evaluateIndividual(int i) {
+    currentGeneration[i].enumerate(1);
+    currentGeneration[i].setFitness(fitFunc(currentGeneration[i]));
+}
+
+
+template<typename T>
+void GenProg<T>::vary() {
+    currentGeneration = lastGeneration;
+    /*std::vector<std::thread> threads;
+    while (currentGeneration.size() < populationSize * 2) {
+        int randomNum = getRnd(0, mutationProbability + crossoverProbability);
+        if (currentGeneration.size() == populationSize * 2 - 1) {
+            std::thread newT(&GenProg<T>::performMutation, this);
+            threads.push_back(std::move(newT));
+        } else if (mutationProbability < crossoverProbability) {
+            if (randomNum <= mutationProbability) {
+                std::thread newT(&GenProg<T>::performMutation, this);
+                threads.push_back(std::move(newT));
+            } else {
+                std::thread newT(&GenProg<T>::performCrossover, this);
+                threads.push_back(std::move(newT));
             }
         } else {
-            if (randomNum<=crossoverChance){
-                performCrossover(newGeneration);
-            }
-            else{
-                performMutation(newGeneration);
+            if (randomNum <= crossoverProbability) {
+                std::thread newT(&GenProg<T>::performCrossover, this);
+                threads.push_back(std::move(newT));
+            } else {
+                std::thread newT(&GenProg<T>::performMutation, this);
+                threads.push_back(std::move(newT));
             }
         }
     }
-    gen = newGeneration;
-}
-
-
-template<typename T > void GenProg<T >::selection() {
-    std::vector<Node<T>> newGeneration= std::vector<Node<T>>{};
-    for (unsigned i= 0; i<populationSize;i++){
-        newGeneration.push_back(gen[i]);
+    for (unsigned i = 0; i < threads.size(); i++) {
+        threads[i].join();
+    }*/
+    while (currentGeneration.size() < populationSize * 2) {
+        int randomNum = getRnd(0, mutationProbability + crossoverProbability);
+        if (currentGeneration.size() == populationSize * 2 - 1) {
+            performMutation();
+        } else if (mutationProbability < crossoverProbability) {
+            if (randomNum <= mutationProbability) {
+                performMutation();
+            } else {
+                performCrossover();
+            }
+        } else {
+            if (randomNum <= crossoverProbability) {
+                performCrossover();
+            } else {
+                performMutation();
+            }
+        }
     }
-    gen = newGeneration;
-    log.addGeneration(gen);
 }
 
 
-template<typename T > Node<T> GenProg<T >::mutate(const Node<T> &tree){
-    int num = getRnd(1,tree.getLineageSize()+2);
-    Node<T> newTree=this->findAndReplace(tree,num,0);
+template<typename T>
+void GenProg<T>::selection() {
+    lastGeneration = std::vector<Node<T>>{};
+    for (unsigned i = 0; i < populationSize; i++) {
+        lastGeneration.push_back(currentGeneration[i]);
+    }
+    log.addGeneration(lastGeneration);
+}
+
+
+template<typename T>
+Node<T> GenProg<T>::mutate(const Node<T> &tree) {
+    int num = getRnd(1, tree.getLineageSize() + 2);
+    Node<T> newTree = this->findAndReplace(tree, num, 0);
     return newTree;
 }
 
-template<typename T > std::pair<Node<T>, Node<T>> GenProg<T >::crossover(const Node<T> &tree1,const Node<T> &tree2) {
+template<typename T>
+std::pair<Node<T>, Node<T>> GenProg<T>::crossover(const Node<T> &tree1, const Node<T> &tree2) {
     Node<T> firstTreeCopy(tree1);
-    int firstRandomNum = getRnd(1,firstTreeCopy.getLineageSize()+2);
+    int firstRandomNum = getRnd(1, firstTreeCopy.getLineageSize() + 2);
 
     Node<T> secondTreeCopy(tree2);
-    int secondRandomNum = getRnd(1,secondTreeCopy.getLineageSize()+2);
+    int secondRandomNum = getRnd(1, secondTreeCopy.getLineageSize() + 2);
 
-    if (firstRandomNum == 1 && secondRandomNum == 1){
-        return std::pair<Node<T>,Node<T>> {firstTreeCopy,secondTreeCopy};
+    if (firstRandomNum == 1 && secondRandomNum == 1) {
+        return std::pair<Node<T>, Node<T>> {firstTreeCopy, secondTreeCopy};
     }
-    if (firstRandomNum==1){
-        std::pair<Node<T> &,int> secondTreeRes = getChildByNum(secondTreeCopy, secondRandomNum);
+    if (firstRandomNum == 1) {
+        std::pair<Node<T> &, int> secondTreeRes = getChildByNum(secondTreeCopy, secondRandomNum);
         std::vector<Node<T>> &children2 = secondTreeRes.first.getMutableChildren();
 
         Node<T> child1 = firstTreeCopy;
@@ -258,10 +358,10 @@ template<typename T > std::pair<Node<T>, Node<T>> GenProg<T >::crossover(const N
         children2[secondTreeRes.second] = child1;
         secondTreeRes.first.setChildren(children2);
 
-        return std::pair<Node<T>,Node<T>> {firstTreeCopy,secondTreeCopy};
+        return std::pair<Node<T>, Node<T>> {firstTreeCopy, secondTreeCopy};
     }
-    if (secondRandomNum == 1){
-        std::pair<Node<T> &,int> firstTreeRes = getChildByNum(firstTreeCopy, firstRandomNum);
+    if (secondRandomNum == 1) {
+        std::pair<Node<T> &, int> firstTreeRes = getChildByNum(firstTreeCopy, firstRandomNum);
         std::vector<Node<T>> &children1 = firstTreeRes.first.getMutableChildren();
 
         Node<T> child1 = children1[firstTreeRes.second];
@@ -272,10 +372,10 @@ template<typename T > std::pair<Node<T>, Node<T>> GenProg<T >::crossover(const N
         children1[firstTreeRes.second] = child2;
         firstTreeRes.first.setChildren(children1);
 
-        return std::pair<Node<T>,Node<T>> {firstTreeCopy,secondTreeCopy};
+        return std::pair<Node<T>, Node<T>> {firstTreeCopy, secondTreeCopy};
     }
-    std::pair<Node<T> &,int> firstTreeRes = getChildByNum(firstTreeCopy, firstRandomNum);
-    std::pair<Node<T> &,int> secondTreeRes = getChildByNum(secondTreeCopy, secondRandomNum);
+    std::pair<Node<T> &, int> firstTreeRes = getChildByNum(firstTreeCopy, firstRandomNum);
+    std::pair<Node<T> &, int> secondTreeRes = getChildByNum(secondTreeCopy, secondRandomNum);
 
     std::vector<Node<T>> &children1 = firstTreeRes.first.getMutableChildren();
     std::vector<Node<T>> &children2 = secondTreeRes.first.getMutableChildren();
@@ -289,39 +389,38 @@ template<typename T > std::pair<Node<T>, Node<T>> GenProg<T >::crossover(const N
     firstTreeRes.first.setChildren(children1);
     secondTreeRes.first.setChildren(children2);
 
-    return std::pair<Node<T>, Node<T>> {firstTreeCopy,secondTreeCopy};
+    return std::pair<Node<T>, Node<T>> {firstTreeCopy, secondTreeCopy};
 }
 
-template<typename T > std::pair<Node<T> &,int> GenProg<T >::getChildByNum(Node<T> &tree, int num){
+template<typename T>
+std::pair<Node<T> &, int> GenProg<T>::getChildByNum(Node<T> &tree, int num) {
     std::vector<Node<T>> &children = tree.getMutableChildren();
-    for (int i=0;i<children.size()-1;i++){
-        if (children[i].getNodeNum()==num){
-            return std::pair<Node<T> &, int>{tree,i};
-        }
-        else if (children[i+1].getNodeNum()>num){
-            return getChildByNum(children[i],num);
+    for (unsigned i = 0; i < children.size() - 1; i++) {
+        if (children[i].getNodeNum() == num) {
+            return std::pair<Node<T> &, int>{tree, i};
+        } else if (children[i + 1].getNodeNum() > num) {
+            return getChildByNum(children[i], num);
         }
     }
-    if (children[children.size() - 1].getNodeNum() == num){
-        return std::pair<Node<T> &, int>{tree,children.size() - 1};
+    if (children[children.size() - 1].getNodeNum() == num) {
+        return std::pair<Node<T> &, int>{tree, children.size() - 1};
     }
-    return getChildByNum(children[children.size()-1],num);
+    return getChildByNum(children[children.size() - 1], num);
 }
 
-template<typename T > Node<T> GenProg<T >::findAndReplace(const Node<T> &tree,int num,int depth){
+template<typename T>
+Node<T> GenProg<T>::findAndReplace(const Node<T> &tree, int num, int depth) {
     Node<T> modifiedTree = tree;
     std::vector<Node<T>> children = tree.getChildren();
-    for (int i=0;i<children.size();i++){
-        if (children[i].getNodeNum()==num){
-            children.erase(children.begin()+i);
-            children.insert(children.begin()+i,fullRecursively(depth,tree.getFunc())[0]);
+    for (unsigned i = 0; i < children.size(); i++) {
+        if (children[i].getNodeNum() == num) {
+            children.erase(children.begin() + i);
+            children.insert(children.begin() + i, fullRecursively(depth, tree.getFunc())[0]);
             break;
-        }
-        else if (i==children.size()-1){
-            children[i]=findAndReplace(children[i],num,depth+1);
-        }
-        else if (children[i+1].getNodeNum()>num){
-            children[i]=findAndReplace(children[i],num,depth+1);
+        } else if (i == children.size() - 1) {
+            children[i] = findAndReplace(children[i], num, depth + 1);
+        } else if (children[i + 1].getNodeNum() > num) {
+            children[i] = findAndReplace(children[i], num, depth + 1);
             break;
         }
     }
@@ -329,39 +428,41 @@ template<typename T > Node<T> GenProg<T >::findAndReplace(const Node<T> &tree,in
     return modifiedTree;
 }
 
-template<typename T > const int GenProg<T >::getRnd(int from, int to){
-    std::uniform_int_distribution<> distr(from, to-1); // define the range
+template<typename T>
+int GenProg<T>::getRnd(int from, int to) {
+    std::uniform_int_distribution<> distr(from, to - 1); // define the range
     return distr(mt);
 }
 
-template<typename T > Node<T> GenProg<T >::growTreeCreate(){
-    if (getRnd(0,100)>75){
-        int index = getRnd(0,terminals.size());
-        return Node<T>(terminals[index],true);
+template<typename T>
+Node<T> GenProg<T>::growTreeCreate() {
+    if (getRnd(0, 100) > 75) {
+        int index = getRnd(0, terminals.size());
+        return Node<T>(terminals[index], true);
     }
-    int index = getRnd(0,functions.size());
-    return Node<T>(functions[index],growRecursively(1,functions[index]));
+    int index = getRnd(0, functions.size());
+    return Node<T>(functions[index], growRecursively(1, functions[index]));
 }
 
-template<typename T > const std::vector< Node<T> > GenProg<T>::growRecursively(const int depth, const Func<T> &func){
-    int child = getRnd( func.getMinArity(), func.getMaxArity()+1);
-    std::vector< Node<T> > children = std::vector< Node<T> >{};
-    if (depth == maxTreeHeight ){
-        for (unsigned i = 0; i<child;i++){
+template<typename T>
+const std::vector<Node<T> > GenProg<T>::growRecursively(const int depth, const Func<T> &func) {
+    int child = getRnd(func.getMinArity(), func.getMaxArity() + 1);
+    std::vector<Node<T> > children = std::vector<Node<T> >{};
+    if (depth == maxTreeHeight) {
+        for (unsigned i = 0; i < child; i++) {
             int index = getRnd(0, terminals.size());
-            children.push_back( Node<T>( terminals[index],true ) );
+            children.push_back(Node<T>(terminals[index], true));
         }
         return children;
     }
-    int termChance = 35;
-    for (unsigned i = 0; i< child; i++){
-        if (getRnd(0,100)<=termChance){
+    int termProbability = 35;
+    for (unsigned i = 0; i < child; i++) {
+        if (getRnd(0, 100) <= termProbability) {
             int index = getRnd(0, terminals.size());
-            children.push_back( Node<T>( terminals[index],true ) );
-        }
-        else{
-            int index = getRnd(0,functions.size());
-            Node<T> newNode = Node<T>( functions[index], growRecursively( depth+1, functions[index] ) );
+            children.push_back(Node<T>(terminals[index], true));
+        } else {
+            int index = getRnd(0, functions.size());
+            Node<T> newNode = Node<T>(functions[index], growRecursively(depth + 1, functions[index]));
             children.push_back(newNode);
         }
     }
@@ -369,94 +470,135 @@ template<typename T > const std::vector< Node<T> > GenProg<T>::growRecursively(c
 }
 
 
-template<typename T > Node<T> GenProg<T>::fullTreeCreate(){
-    int index = getRnd(0,functions.size());
-    return Node<T>(functions[index],fullRecursively(2,functions[index]));
+template<typename T>
+Node<T> GenProg<T>::fullTreeCreate() {
+    int index = getRnd(0, functions.size());
+    return Node<T>(functions[index], fullRecursively(2, functions[index]));
 }
 
 
-template<typename T > const std::vector< Node<T> > GenProg<T>::fullRecursively(const int depth, const Func<T> &func){
-    int child = getRnd( func.getMinArity(), func.getMaxArity()+1);
+template<typename T>
+const std::vector<Node<T> > GenProg<T>::fullRecursively(const int depth, const Func<T> &func) {
+    int child = getRnd(func.getMinArity(), func.getMaxArity() + 1);
     std::vector<Node<T>> children = std::vector<Node<T>>{};
-    if (depth >= maxTreeHeight ){
-        for (unsigned i = 0; i<child;i++){
+    if (depth >= maxTreeHeight) {
+        for (unsigned i = 0; i < child; i++) {
             int index = getRnd(0, terminals.size());
-            children.push_back( Node<T>( terminals[index], true ) );
+            children.push_back(Node<T>(terminals[index], true));
         }
         return children;
     }
-    for (unsigned i = 0; i< child; i++){
-        int index = getRnd(0,functions.size());
-        Node<T> newNode = Node<T>( functions[index], fullRecursively( depth+1, functions[index]) );
+    for (unsigned i = 0; i < child; i++) {
+        int index = getRnd(0, functions.size());
+        Node<T> newNode = Node<T>(functions[index], fullRecursively(depth + 1, functions[index]));
         children.push_back(newNode);
     }
     return children;
 }
 
 
-template<typename T > Node<T> GenProg<T>::getRandomIndividual() {
-    std::uniform_real_distribution<> distr(0,std::nextafter(1, DBL_MAX));
+template<typename T>
+Node<T> GenProg<T>::getRandomIndividual() {
+    std::uniform_real_distribution<> distr(0, std::nextafter(1, DBL_MAX));
     double rnd = distr(mt);
-    for (unsigned i =0;i<gen.size();i++){
-        if (gen[i].getValue()>rnd){
-            return gen[i];
+    for (unsigned i = 0; i < lastGeneration.size(); i++) {
+        if (lastGeneration[i].getFitness() > rnd) {
+            return lastGeneration[i];
         }
     }
-    return gen[gen.size()-1];
+    return lastGeneration[lastGeneration.size() - 1];
 }
 
 
-template<typename T > void GenProg<T>::performMutation(std::vector<Node<T>> &actualGeneration){
+template<typename T>
+void GenProg<T>::performMutation() {
     Node<T> firstIndividual = getRandomIndividual();
-    actualGeneration.push_back(mutate(firstIndividual));
+    m.lock();
+    currentGeneration.push_back(mutate(firstIndividual));
+    m.unlock();
 }
 
-template<typename T > void GenProg<T>::performCrossover(std::vector<Node<T>> &actualGeneration) {
+template<typename T>
+void GenProg<T>::performCrossover() {
     Node<T> firstIndividual = getRandomIndividual();
     Node<T> secondIndividual = getRandomIndividual();
-    for (unsigned i = 0; i<numberOfAttempts; i++){
-        std::pair<Node<T>, Node<T>> crossoverRes = crossover(firstIndividual,secondIndividual);
+    for (unsigned i = 0; i < numberOfAttempts; i++) {
+        std::pair<Node<T>, Node<T>> crossoverRes = crossover(firstIndividual, secondIndividual);
         if (crossoverRes.first.height() <= maxTreeHeight && crossoverRes.second.height() <= maxTreeHeight) {
-            actualGeneration.push_back(crossoverRes.first);
-            actualGeneration.push_back(crossoverRes.second);
+            m.lock();
+            currentGeneration.push_back(crossoverRes.first);
+            currentGeneration.push_back(crossoverRes.second);
+            m.unlock();
             return;
         }
     }
 }
 
 
-template <typename T> void GenProg<T>::setPopulationSize(int size){
-    this->populationSize=size;
+template<typename T>
+void GenProg<T>::setPopulationSize(unsigned size) {
+    this->populationSize = size;
 }
 
-template <typename T> void GenProg<T>::setGenerationsLimit(int limit){
+template<typename T>
+void GenProg<T>::setGenerationsLimit(unsigned limit) {
     this->generationsLimit = limit;
 }
 
-template <typename T> void GenProg<T>::setFullMethodChance(int chance){
-    this->chanceFullTree = chance;
+template<typename T>
+void GenProg<T>::setInitializationMethod(std::string method) {
+    this->initMethod = method;
 }
 
-template <typename T> void GenProg<T>::setGrowMethodChance(int chance){
-    this->chanceGrowTree = chance;
+
+template<typename T>
+void GenProg<T>::setMutationProbability(unsigned probability) {
+    this->mutationProbability = probability;
 }
 
-template <typename T> void GenProg<T>::setMutationChance(int chance){
-    this->mutationChance = chance;
+template<typename T>
+void GenProg<T>::setCrossoverProbability(unsigned probability) {
+    this->crossoverProbability = probability;
 }
 
-template <typename T> void GenProg<T>::setCrossoverChance(int chance){
-    this->crossoverChance = chance;
-}
-
-template <typename T> void GenProg<T>::setMaxTreeHeight(int height){
+template<typename T>
+void GenProg<T>::setMaxTreeHeight(unsigned height) {
     this->maxTreeHeight = height;
 }
 
-template <typename T> void GenProg<T>::setNumberOfAttempts(int num) {
+template<typename T>
+void GenProg<T>::setNumberOfAttempts(unsigned num) {
     this->numberOfAttempts = num;
 }
 
-template <typename T> const Log<T> &GenProg<T>::getLog() const {
+template<typename T>
+const Log<T> &GenProg<T>::getLog() const {
     return this->log;
 }
+
+template<typename T>
+void GenProg<T>::addFunction(const Func<T> &func) {
+    this->functions.push_back(func);
+};
+
+template<typename T>
+void GenProg<T>::setFunctions(const std::vector<Func<T> > &func) {
+    this->functions = func;
+};
+
+template<typename T>
+void GenProg<T>::addTerminal(const Func<T> &term) {
+    this->terminals.push_back(term);
+};
+
+template<typename T>
+void GenProg<T>::setTerminals(const std::vector<Func<T> > &term) {
+    this->terminals = term;
+}
+
+// if true: the higher fitness, the better
+template<typename T>
+void GenProg<T>::setReversedFitness(bool isReversed) {
+    this->reversedFitness = isReversed;
+};
+

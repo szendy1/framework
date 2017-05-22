@@ -1,9 +1,14 @@
 #ifndef FRAMEWORK_LOG_H
 #define FRAMEWORK_LOG_H
 
+#include <iostream>
+
 #include "Node.h"
 #include <cairo.h>
+#include <math.h>
 #include "gtk/gtk.h"
+
+//#include "../include/gnuplot_i.hpp"
 
 template <typename T> class Log {
     std::vector<std::vector<Node<T> > > generations;
@@ -13,7 +18,7 @@ public:
     std::vector<Node<T>> getGeneration(unsigned int index);
     unsigned int getNumberOfGenerations();
 
-    void loadDrawing(int argc, char **argv);
+
 };
 
 template <typename T> Log<T>::Log() : generations(std::vector< std::vector< Node<T> > >{})
@@ -43,78 +48,38 @@ template <typename T> unsigned int Log<T>::getNumberOfGenerations() {
 
 
 
+/*
+void slow_print ( std::string s );
+template <typename T> void Log<T>::plotGraph(int argc, char *argv[]) {
+    double d[NPOINTS];
+   // dpoint dp[NPOINTS];
+
+    Gnuplot g;
+
+    int i;
+    int j;
+    double x[NPOINTS];
+    double y[NPOINTS];
+
+    g.plot_slope(1.0,0.0,"unity slope");
+    sleep(SLEEP_LGTH);
 
 
-static void do_drawing(cairo_t *);
+}
 
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
-                              gpointer user_data)
+void slow_print ( std::string s )
+
+//****************************************************************************80
 {
-    do_drawing(cr);
+    int i;
 
-    return FALSE;
-}
-
-static void do_drawing(cairo_t *cr)
-{
-    cairo_set_source_rgb(cr, 0, 0, 0);
-    cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL,
-                           CAIRO_FONT_WEIGHT_NORMAL);
-    cairo_set_font_size(cr, 40.0);
-
-    cairo_move_to(cr, 10.0, 50.0);
-    cairo_show_text(cr, "Disziplin ist Macht.");
-}
-
-
-static gboolean
-on_expose_event (GtkWidget *widget,
-                 GdkEventExpose *event,
-                 gpointer data)
-{
-    cairo_t *cr;
-
-    cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-    cairo_set_source_rgb(cr, 0, 0, 0);
-    cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL,
-                           CAIRO_FONT_WEIGHT_NORMAL);
-    cairo_set_font_size(cr, 40.0);
-
-    cairo_move_to (cr, 30, 30);
-    cairo_show_text (cr, "Text");
-
-    cairo_destroy (cr);
-
-    return FALSE;
-}
-
-
-template <typename T> void Log<T>::loadDrawing(int argc, char *argv[]){
-    GtkWidget *window;
-    GtkWidget *darea;
-
-    gtk_init(&argc, &argv);
-
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-
-    darea = gtk_drawing_area_new();
-    gtk_container_add(GTK_CONTAINER(window), darea);
-
-    g_signal_connect(darea, "expose-event",
-                     G_CALLBACK(on_expose_event), NULL);
-    g_signal_connect(window, "destroy",
-                     G_CALLBACK(gtk_main_quit), NULL);
-
-    gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-    gtk_window_set_default_size(GTK_WINDOW(window), 1500, 800);
-    gtk_window_set_title(GTK_WINDOW(window), "Graphic visualisation of Individual");
-
-    gtk_widget_show_all(window);
-
-    gtk_main();
-
-}
+    for ( i = 0; i < s.length ( ); i++ )
+    {
+        std::cout << s[i] << std::flush;
+        usleep ( 100000 );
+    }
+    return;
+}*/
 
 
 template class Log<double>;

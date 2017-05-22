@@ -1,8 +1,8 @@
 
-#ifndef ODMOCNINA_MYGENPROG_H
-#define ODMOCNINA_MYGENPROG_H
+#ifndef ODMOCNINA_SQUAREROOT_H
+#define ODMOCNINA_SQUAREROOT_H
 
-#include "include/genprog.h"
+#include "include/GenProg.h"
 #include <functional>
 
 template <typename T > class Func;
@@ -26,9 +26,8 @@ double SquareRoot::fitFunc(const Node<double> &root) {
         double e = evaluateTree(root, values[i]);
         res += fabs(e - sqrt(values[i][0]));
     }
-
     return res/values.size();
 }
 
 
-#endif //ODMOCNINA_MYGENPROG_H
+#endif //ODMOCNINA_SQUAREROOT_H
