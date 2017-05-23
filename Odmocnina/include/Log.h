@@ -19,7 +19,7 @@ class Log {
 public:
     Log();
 
-    void addGeneration(const std::vector<Node<T>> &newGen);
+    void addGeneration(const std::vector<Node<T>> newGen);
 
     const std::vector<Node<T>> getGeneration(unsigned int index) const;
 
@@ -31,12 +31,12 @@ public:
 };
 
 template<typename T>
-Log<T>::Log() : generations(std::vector<std::vector<Node<T> > >{}) {
+Log<T>::Log(){
 }
 
 
 template<typename T>
-void Log<T>::addGeneration(const std::vector<Node<T> > &newGen) {
+void Log<T>::addGeneration(const std::vector<Node<T> > newGen) {
     this->generations.push_back(newGen);
 }
 
@@ -63,11 +63,11 @@ void Log<T>::drawPngGraph() {
     mglGraph gr;
     gr.SetSize(1680, 1050);
     gr.Title("Average Fitness through all generations");
-    gr.SetRanges(0, generations.size(), 0, 2);
+    gr.SetRanges(0, generations.size(), 0, 50);
     gr.Axis();
 
     std::vector<mglPoint> points;
-    for (unsigned int i =1; i<generations.size();i++){
+    for (unsigned int i =0; i<generations.size();i++){
         points.push_back(mglPoint(i,getAverageFitness(i)));
     }
     for (unsigned i =1; i<points.size();i++){

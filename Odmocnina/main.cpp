@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
 
     g.setNumberOfAttempts(4);
 
-    g.setMaxTreeHeight(5);
+    g.setMaxTreeHeight(10);
 
     g.addTerminal(Func<double>(aterm, 0, 0, "d"));
 

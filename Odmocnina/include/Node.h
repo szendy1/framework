@@ -65,7 +65,7 @@ public:
 
     bool operator < (const Node& other) const
     {
-        return (this->normalizedFitness > other.normalizedFitness);
+        return (this->fitness < other.fitness);
     }
 
 };

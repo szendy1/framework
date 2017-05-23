@@ -162,6 +162,8 @@ void GenProg<T>::perform() {
     }
     this->initialize();
     this->evaluate();
+    log.addGeneration(currentGeneration);
+    lastGeneration = currentGeneration;
     generation = 0;
 
     while (generation < generationsLimit) {
@@ -181,20 +183,18 @@ template<typename T>
 void GenProg<T>::initialize() {
     std::cout << "init started" << std::endl;
     std::vector<std::thread> threads;
-    /*for (unsigned i = 0; i < populationSize; i++) {
+    for (unsigned i = 0; i < populationSize; i++) {
         std::thread newT(&GenProg<T>::createIndividual, this);
         threads.push_back(std::move(newT));
     }
 
     for (unsigned i = 0; i < threads.size(); i++) {
         threads[i].join();
-    }*/
-    for (unsigned i= 0;i<populationSize;i++){
-        createIndividual();
     }
+   /* for (unsigned i= 0;i<populationSize;i++){
+        createIndividual();
+    }*/
 
-    log.addGeneration(currentGeneration);
-    lastGeneration = currentGeneration;
 }
 
 
@@ -248,6 +248,9 @@ void GenProg<T>::evaluate() {
         }
     }
     std::sort(currentGeneration.begin(), currentGeneration.end());
+    if (reversedFitness){
+        std::reverse(currentGeneration.begin(),currentGeneration.end());
+    }
     //count acumulated fitness
     double accumulatedSum = 0.0;
     for (unsigned i = 0; i < currentGeneration.size(); i++) {
@@ -256,8 +259,10 @@ void GenProg<T>::evaluate() {
         currentGeneration[i].setAccumulatedNormalizedFitness(accumulatedSum);
     }
 
-    //std::cout << currentGeneration[0].getAccumulatedNormalizedFitness() << std::endl;
-    //std::cout << currentGeneration[99].getAccumulatedNormalizedFitness() << std::endl;
+    std::cout << currentGeneration[0].getFitness() << std::endl;
+    std::cout << currentGeneration[0].getNormalizedFitness() << std::endl;
+    std::cout << currentGeneration[currentGeneration.size()-1].getFitness() << std::endl;
+    std::cout << currentGeneration[currentGeneration.size()-1].getNormalizedFitness() << std::endl;
 }
 
 template<typename T>
@@ -269,7 +274,7 @@ void GenProg<T>::evaluateIndividual(int i) {
 
 template<typename T>
 void GenProg<T>::vary() {
-    currentGeneration = lastGeneration;
+    currentGeneration.clear();
     /*std::vector<std::thread> threads;
     while (currentGeneration.size() < populationSize * 2) {
         int randomNum = getRnd(0, mutationProbability + crossoverProbability);
@@ -315,11 +320,15 @@ void GenProg<T>::vary() {
             }
         }
     }
+    for (unsigned i=0;i<lastGeneration.size();i++){
+        currentGeneration.push_back(lastGeneration[i]);
+    }
 }
 
 
 template<typename T>
 void GenProg<T>::selection() {
+    std::sort(currentGeneration.begin(),currentGeneration.end());
     lastGeneration = std::vector<Node<T>>{};
     for (unsigned i = 0; i < populationSize; i++) {
         lastGeneration.push_back(currentGeneration[i]);
@@ -502,7 +511,7 @@ Node<T> GenProg<T>::getRandomIndividual() {
     std::uniform_real_distribution<> distr(0, std::nextafter(1, DBL_MAX));
     double rnd = distr(mt);
     for (unsigned i = 0; i < lastGeneration.size(); i++) {
-        if (lastGeneration[i].getFitness() > rnd) {
+        if (lastGeneration[i].getAccumulatedNormalizedFitness() > rnd) {
             return lastGeneration[i];
         }
     }
