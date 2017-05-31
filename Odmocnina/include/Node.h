@@ -14,7 +14,7 @@ private:
     std::string data;
     Func<T> func;
 
-    std::string infix();
+    std::string preorder();
 
     int numNodes;
     int myNum;
@@ -59,7 +59,6 @@ public:
 
     const int getLineageSize() const;
     const int getNodeNum() const;
-    void resetNodeNum();
 
     const bool isTerminal() const {return this->isTerm;};
 
@@ -115,9 +114,6 @@ template <typename T > const int Node<T>::getLineageSize() const{ return this->n
 
 template <typename T > const int Node<T>::getNodeNum() const{ return this->myNum; }
 
-template <typename T > void Node<T>::resetNodeNum() { this->myNum=0; this->numNodes=0;}
-
-
 template <typename T > const int Node<T>::height() const {
     if (isTerm){
         return 1;
@@ -134,20 +130,22 @@ template <typename T > const int Node<T>::height() const {
 
 
 template <typename T > std::string Node<T>::toString(){
-    return infix();
+    return preorder();
 }
 
-template <typename T > std::string Node<T>::infix(){
+template <typename T > std::string Node<T>::preorder(){
     if (isTerm) {
         return getFunc().getRepr();
     }
+    const char* separator = "";
     std::stringstream ss;
     ss<< getFunc().getRepr();
     ss<< "(" ;
     for (int i = 0; i < children.size(); i++) {
-        ss << children[i].infix() << " " ;
+        ss << separator << children[i].preorder();
+        separator = " ";
     }
-    ss<< ")";
+    ss << ')';
     return ss.str();
 
 }

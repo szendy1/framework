@@ -2,7 +2,6 @@
 #include <vector>
 #include <cmath>
 #include <functional>
-#include <wx/wx.h>
 
 #include "SquareRoot.h"
 
@@ -96,7 +95,10 @@ int main(int argc, char *argv[]) {
 
     g.setNumberOfAttempts(4);
 
-    g.setMaxTreeHeight(10);
+    g.setMaxTreeHeight(3);
+
+
+
 
     g.addTerminal(Func<double>(aterm, 0, 0, "d"));
 

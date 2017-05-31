@@ -5,14 +5,14 @@
 
 #include "Node.h"
 #include <cmath>
-#include <cairo.h>
-#include <gtk/gtk.h>
 #include <mgl2/mgl.h>
 
 
 template<typename T>
 class Log {
     std::vector<std::vector<Node<T> > > generations;
+
+    bool disabled;
 
     double getAverageFitness(unsigned int gen);
 
@@ -25,8 +25,11 @@ public:
 
     unsigned int getNumberOfGenerations();
 
-    void drawPngGraph();
+    void drawPngGraph(int width = 1680, int height = 1050);
 
+    void setEnabled();
+    void setDisabled();
+    bool isDisabled();
 
 };
 
@@ -59,11 +62,11 @@ unsigned int Log<T>::getNumberOfGenerations() {
 }
 
 template<typename T>
-void Log<T>::drawPngGraph() {
+void Log<T>::drawPngGraph(int width, int height) {
     mglGraph gr;
-    gr.SetSize(1680, 1050);
+    gr.SetSize(width, height);
     gr.Title("Average Fitness through all generations");
-    gr.SetRanges(0, generations.size(), 0, 50);
+    gr.SetRanges(0, generations.size(),0,0.1);
     gr.Axis();
 
     std::vector<mglPoint> points;
@@ -75,7 +78,7 @@ void Log<T>::drawPngGraph() {
     }
 
     gr.Light(true);
-    gr.WriteFrame("non-thread-graph.png");
+    gr.WriteFrame("thread-graph.png");
 
 }
 
@@ -83,9 +86,20 @@ template<typename T>
 double Log<T>::getAverageFitness(unsigned int gen) {
     double accumulatedSum = 0.0;
     for (unsigned i= 0; i<generations[gen].size();i++){
-        accumulatedSum += generations[gen][i].getFitness();
+        accumulatedSum += generations[gen][i].getNormalizedFitness();
     }
     return accumulatedSum/generations[gen].size();
+}
+
+template<typename T>
+void Log<T>::setEnabled() { this->disabled = false; }
+
+template<typename T>
+void Log<T>::setDisabled() { this->disabled = true; }
+
+template<typename T>
+bool Log<T>::isDisabled(){
+    return this->disabled;
 }
 
 

@@ -63,18 +63,28 @@ public:
 
     void setTerminals(const std::vector<Func<T> > &term);
 
-    void setReversedFitness(bool isReversed);
+    void setStandardisedFitness(bool isStandard);
+
+    const std::vector<Node<T>> &getCurrentGeneration();
+
+    void setCurrentGeneration(const std::vector<Node<T>> &currGen);
+
+    const std::vector<Node<T>> &getLastGeneration();
 
 
     virtual double fitFunc(const Node<T> &root) { return 0.0; };
 
-    void evaluateIndividual(int i);
+    virtual bool terminationCriterion();
+
+    virtual void preEvaluation() {};
+    virtual void postCycle();
 
 private:
     std::mutex m;
 
     std::vector<Node<T> > lastGeneration;
     std::vector<Node<T> > currentGeneration;
+    std::vector<Node<T> > temporaryGeneration;
 
     unsigned generation;
 
@@ -90,7 +100,7 @@ private:
 
     unsigned maxTreeHeight;
 
-    bool reversedFitness = false;
+    bool standardisedFitness = true;
 
     Log<T> log;
 
@@ -122,6 +132,9 @@ private:
     Node<T> getRandomIndividual();
 
     void createIndividual();
+
+    void evaluateIndividual(int i);
+
 };
 
 template
@@ -149,6 +162,7 @@ GenProg<T>::GenProg() {
     maxTreeHeight = 3;
 
     log = Log<T>();
+    log.setEnabled();
 }
 
 template<typename T>
@@ -162,27 +176,33 @@ void GenProg<T>::perform() {
     }
     this->initialize();
     this->evaluate();
-    log.addGeneration(currentGeneration);
+    if (!log.isDisabled()) {
+        log.addGeneration(currentGeneration);
+    }
     lastGeneration = currentGeneration;
     generation = 0;
 
-    while (generation < generationsLimit) {
+    while (generation < generationsLimit && !terminationCriterion()) {
         generation++;
 
         this->vary();
 
-        std::cout << "eval started : " << generation << std::endl;
+        this->preEvaluation();
+
+        std::cout << "generation : " << generation << std::endl;
         this->evaluate();
 
         this->selection();
+
+        this->postCycle();
+
     }
     std::cout << currentGeneration[0].toString() << std::endl;
 }
 
 template<typename T>
 void GenProg<T>::initialize() {
-    std::cout << "init started" << std::endl;
-    std::vector<std::thread> threads;
+     std::vector<std::thread> threads;
     for (unsigned i = 0; i < populationSize; i++) {
         std::thread newT(&GenProg<T>::createIndividual, this);
         threads.push_back(std::move(newT));
@@ -191,9 +211,6 @@ void GenProg<T>::initialize() {
     for (unsigned i = 0; i < threads.size(); i++) {
         threads[i].join();
     }
-   /* for (unsigned i= 0;i<populationSize;i++){
-        createIndividual();
-    }*/
 
 }
 
@@ -230,25 +247,27 @@ void GenProg<T>::evaluate() {
     for (unsigned i = 0; i < currentGeneration.size(); i++) {
         fitnessSum += currentGeneration[i].getFitness();
     }
-    for (unsigned i = 0; i < currentGeneration.size(); i++) {
-        double fitness = currentGeneration[i].getFitness();
-        double normalizedFitness = fitness / fitnessSum;
-        currentGeneration[i].setNormalizedFitness(normalizedFitness);
-    }
-    if (!reversedFitness){
+    if (standardisedFitness){
         std::vector<double> adjustedFitness;
         double adjustedSum = 0.0;
         for (unsigned i = 0; i < currentGeneration.size(); i++){
-            adjustedFitness.push_back(1/(1+currentGeneration[i].getNormalizedFitness()));
-            adjustedSum+=(1/(1+currentGeneration[i].getNormalizedFitness()));
+            adjustedFitness.push_back(1/(1+currentGeneration[i].getFitness()));
+            adjustedSum+=(1/(1+currentGeneration[i].getFitness()));
         }
         for (unsigned i=0; i < currentGeneration.size();i++){
             double normalizedFitness = adjustedFitness[i] / adjustedSum;
             currentGeneration[i].setNormalizedFitness(normalizedFitness);
         }
     }
+    else{
+        for (unsigned i = 0; i < currentGeneration.size(); i++) {
+            double fitness = currentGeneration[i].getFitness();
+            double normalizedFitness = fitness / fitnessSum;
+            currentGeneration[i].setNormalizedFitness(normalizedFitness);
+        }
+    }
     std::sort(currentGeneration.begin(), currentGeneration.end());
-    if (reversedFitness){
+    if (!standardisedFitness){
         std::reverse(currentGeneration.begin(),currentGeneration.end());
     }
     //count acumulated fitness
@@ -260,9 +279,7 @@ void GenProg<T>::evaluate() {
     }
 
     std::cout << currentGeneration[0].getFitness() << std::endl;
-    std::cout << currentGeneration[0].getNormalizedFitness() << std::endl;
     std::cout << currentGeneration[currentGeneration.size()-1].getFitness() << std::endl;
-    std::cout << currentGeneration[currentGeneration.size()-1].getNormalizedFitness() << std::endl;
 }
 
 template<typename T>
@@ -275,33 +292,7 @@ void GenProg<T>::evaluateIndividual(int i) {
 template<typename T>
 void GenProg<T>::vary() {
     currentGeneration.clear();
-    /*std::vector<std::thread> threads;
-    while (currentGeneration.size() < populationSize * 2) {
-        int randomNum = getRnd(0, mutationProbability + crossoverProbability);
-        if (currentGeneration.size() == populationSize * 2 - 1) {
-            std::thread newT(&GenProg<T>::performMutation, this);
-            threads.push_back(std::move(newT));
-        } else if (mutationProbability < crossoverProbability) {
-            if (randomNum <= mutationProbability) {
-                std::thread newT(&GenProg<T>::performMutation, this);
-                threads.push_back(std::move(newT));
-            } else {
-                std::thread newT(&GenProg<T>::performCrossover, this);
-                threads.push_back(std::move(newT));
-            }
-        } else {
-            if (randomNum <= crossoverProbability) {
-                std::thread newT(&GenProg<T>::performCrossover, this);
-                threads.push_back(std::move(newT));
-            } else {
-                std::thread newT(&GenProg<T>::performMutation, this);
-                threads.push_back(std::move(newT));
-            }
-        }
-    }
-    for (unsigned i = 0; i < threads.size(); i++) {
-        threads[i].join();
-    }*/
+
     while (currentGeneration.size() < populationSize * 2) {
         int randomNum = getRnd(0, mutationProbability + crossoverProbability);
         if (currentGeneration.size() == populationSize * 2 - 1) {
@@ -329,11 +320,10 @@ void GenProg<T>::vary() {
 template<typename T>
 void GenProg<T>::selection() {
     std::sort(currentGeneration.begin(),currentGeneration.end());
-    lastGeneration = std::vector<Node<T>>{};
+    temporaryGeneration = std::vector<Node<T>>{};
     for (unsigned i = 0; i < populationSize; i++) {
-        lastGeneration.push_back(currentGeneration[i]);
+        temporaryGeneration.push_back(currentGeneration[i]);
     }
-    log.addGeneration(lastGeneration);
 }
 
 
@@ -424,7 +414,12 @@ Node<T> GenProg<T>::findAndReplace(const Node<T> &tree, int num, int depth) {
     for (unsigned i = 0; i < children.size(); i++) {
         if (children[i].getNodeNum() == num) {
             children.erase(children.begin() + i);
-            children.insert(children.begin() + i, fullRecursively(depth, tree.getFunc())[0]);
+            if (initMethod == fullInitializationMethod) {
+                children.insert(children.begin() + i, fullRecursively(depth, tree.getFunc())[0]);
+            }
+            else{
+                children.insert(children.begin() + i, growRecursively(depth, tree.getFunc())[0]);
+            }
             break;
         } else if (i == children.size() - 1) {
             children[i] = findAndReplace(children[i], num, depth + 1);
@@ -464,9 +459,9 @@ const std::vector<Node<T> > GenProg<T>::growRecursively(const int depth, const F
         }
         return children;
     }
-    int termProbability = 35;
+    int termProbability = 50;
     for (unsigned i = 0; i < child; i++) {
-        if (getRnd(0, 100) <= termProbability) {
+        if (getRnd(0, 100) < termProbability) {
             int index = getRnd(0, terminals.size());
             children.push_back(Node<T>(terminals[index], true));
         } else {
@@ -522,9 +517,7 @@ Node<T> GenProg<T>::getRandomIndividual() {
 template<typename T>
 void GenProg<T>::performMutation() {
     Node<T> firstIndividual = getRandomIndividual();
-    m.lock();
     currentGeneration.push_back(mutate(firstIndividual));
-    m.unlock();
 }
 
 template<typename T>
@@ -534,10 +527,8 @@ void GenProg<T>::performCrossover() {
     for (unsigned i = 0; i < numberOfAttempts; i++) {
         std::pair<Node<T>, Node<T>> crossoverRes = crossover(firstIndividual, secondIndividual);
         if (crossoverRes.first.height() <= maxTreeHeight && crossoverRes.second.height() <= maxTreeHeight) {
-            m.lock();
             currentGeneration.push_back(crossoverRes.first);
             currentGeneration.push_back(crossoverRes.second);
-            m.unlock();
             return;
         }
     }
@@ -607,7 +598,35 @@ void GenProg<T>::setTerminals(const std::vector<Func<T> > &term) {
 
 // if true: the higher fitness, the better
 template<typename T>
-void GenProg<T>::setReversedFitness(bool isReversed) {
-    this->reversedFitness = isReversed;
-};
+void GenProg<T>::setStandardisedFitness(bool isStandard) {
+    this->standardisedFitness = isStandard;
+}
 
+template <typename T>
+const std::vector<Node<T>> &GenProg<T>::getCurrentGeneration() {
+    return this->currentGeneration;
+}
+
+template<typename T>
+void GenProg<T>::setCurrentGeneration(const std::vector<Node<T>> &currGen) {
+    this->currentGeneration = currGen;
+}
+
+template <typename T>
+const std::vector<Node<T>> &GenProg<T>::getLastGeneration() {
+    return this->lastGeneration;
+}
+
+template<typename T>
+bool GenProg<T>::terminationCriterion() {
+    return false;
+}
+
+template <typename T>
+void GenProg<T>::postCycle(){
+
+    if (!log.isDisabled()){
+            log.addGeneration(temporaryGeneration);
+        }
+    lastGeneration = temporaryGeneration;
+}
