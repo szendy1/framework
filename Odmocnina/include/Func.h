@@ -18,23 +18,18 @@ public:
     Func(const std::function<T(const std::vector<Node<T> > &, std::vector<T>)> &f, int minArity, int maxArity,
          const std::string &r);
 
-    const std::function<T(const std::vector<Node<T> > &, std::vector<T>)> &getFunc() { return this->func; };
+    const std::function<T(const std::vector<Node<T> > &, std::vector<T>)> &getFunc();
 
-    const int getMinArity() const { return this->minArity; };
+    const int getMinArity() const;
 
-    const int getMaxArity() const { return this->maxArity; };
+    const int getMaxArity() const;
 
-    const std::string &getRepr() const { return this->repr; };
+    const std::string &getRepr() const;
 
 };
 
 
-template<typename T>
-Func<T>::Func(const std::function<T(const std::vector<Node<T> > &, std::vector<T>)> &f, int minArity, int maxArity,
-              const std::string &r)
-        : func(f), minArity(minArity), maxArity(maxArity), repr(r) {}
+#include "Func.inl"
 
-template
-class Func<double>;
 
 #endif //FRAMEWORK_FUNC_H
