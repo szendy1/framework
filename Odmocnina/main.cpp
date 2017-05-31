@@ -5,44 +5,44 @@
 
 #include "SquareRoot.h"
 
-static double plus1(const std::vector< Node<double> > &children, std::vector<double> val);
+static double plus1(const std::vector<Node<double> > &children, std::vector<double> val);
 
-static double minus1(const std::vector< Node<double> > &children, std::vector<double> val);
+static double minus1(const std::vector<Node<double> > &children, std::vector<double> val);
 
-static double multiply(const std::vector< Node<double> > &children, std::vector<double> val);
+static double multiply(const std::vector<Node<double> > &children, std::vector<double> val);
 
-static double divide(const std::vector< Node<double> > &children, std::vector<double> val);
+static double divide(const std::vector<Node<double> > &children, std::vector<double> val);
 
-static double aterm(const std::vector< Node<double> > &children,std::vector<double> val);
+static double aterm(const std::vector<Node<double> > &children, std::vector<double> val);
 
-double plus1(const std::vector< Node<double> > &children, std::vector<double> val) {
-    double res =0.0;
-    for (int i = 0;i<children.size();i++){
-        res+=SquareRoot::evaluateTree(children[i],val);
+double plus1(const std::vector<Node<double> > &children, std::vector<double> val) {
+    double res = 0.0;
+    for (int i = 0; i < children.size(); i++) {
+        res += SquareRoot::evaluateTree(children[i], val);
     }
     return res;
 }
 
-double minus1(const std::vector< Node<double> > &children,std::vector<double> val) {
-    if (children.size()==1){
-        return -SquareRoot::evaluateTree(children[0],val);
+double minus1(const std::vector<Node<double> > &children, std::vector<double> val) {
+    if (children.size() == 1) {
+        return -SquareRoot::evaluateTree(children[0], val);
     }
-    return SquareRoot::evaluateTree(children[0],val)-SquareRoot::evaluateTree(children[1],val);
+    return SquareRoot::evaluateTree(children[0], val) - SquareRoot::evaluateTree(children[1], val);
 }
 
-double multiply(const std::vector< Node<double> > &children,std::vector<double> val) {
-    return SquareRoot::evaluateTree(children[0],val)*SquareRoot::evaluateTree(children[1],val);
+double multiply(const std::vector<Node<double> > &children, std::vector<double> val) {
+    return SquareRoot::evaluateTree(children[0], val) * SquareRoot::evaluateTree(children[1], val);
 }
 
 
-double divide(const std::vector< Node<double> > &children,std::vector<double> val) {
+double divide(const std::vector<Node<double> > &children, std::vector<double> val) {
     if (SquareRoot::evaluateTree(children[1], val) == 0) {
         return 1;
     }
-    return SquareRoot::evaluateTree(children[0],val)/SquareRoot::evaluateTree(children[1],val);
+    return SquareRoot::evaluateTree(children[0], val) / SquareRoot::evaluateTree(children[1], val);
 }
 
-double aterm(const std::vector< Node<double> > &children, std::vector<double> val){
+double aterm(const std::vector<Node<double> > &children, std::vector<double> val) {
     return val[0];
 }
 
@@ -98,8 +98,6 @@ int main(int argc, char *argv[]) {
     g.setMaxTreeHeight(3);
 
 
-
-
     g.addTerminal(Func<double>(aterm, 0, 0, "d"));
 
     g.addFunction(Func<double>(plus1, 2, 5, "+"));
@@ -112,11 +110,5 @@ int main(int argc, char *argv[]) {
     Log<double> ggLog = g.getLog();
     ggLog.drawPngGraph();
 
-//WX Widget
-   /* int flowers = 21;
-    wxString str;
-    str.Printf(wxT("There are %d red roses."), flowers);
-    wxLogMessage(str);
-*/
     return 0;
 }

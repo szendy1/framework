@@ -21,8 +21,8 @@
 template<typename T>
 class GenProg {
 public:
-    static constexpr char *fullInitializationMethod = (char*)"full";
-    static constexpr char *growInitializationMethod = (char*)"grow";
+    static constexpr char *fullInitializationMethod = (char *) "full";
+    static constexpr char *growInitializationMethod = (char *) "grow";
 
     GenProg();
 
@@ -77,6 +77,7 @@ public:
     virtual bool terminationCriterion();
 
     virtual void preEvaluation() {};
+
     virtual void postCycle();
 
 private:
@@ -195,6 +196,10 @@ void GenProg<T>::perform() {
         this->selection();
 
         this->postCycle();
+        lastGeneration = currentGeneration;
+        if (!log.isDisabled()) {
+            log.addGeneration(currentGeneration);
+        }
 
     }
     std::cout << currentGeneration[0].toString() << std::endl;
@@ -202,7 +207,7 @@ void GenProg<T>::perform() {
 
 template<typename T>
 void GenProg<T>::initialize() {
-     std::vector<std::thread> threads;
+    std::vector<std::thread> threads;
     for (unsigned i = 0; i < populationSize; i++) {
         std::thread newT(&GenProg<T>::createIndividual, this);
         threads.push_back(std::move(newT));
@@ -247,19 +252,18 @@ void GenProg<T>::evaluate() {
     for (unsigned i = 0; i < currentGeneration.size(); i++) {
         fitnessSum += currentGeneration[i].getFitness();
     }
-    if (standardisedFitness){
+    if (standardisedFitness) {
         std::vector<double> adjustedFitness;
         double adjustedSum = 0.0;
-        for (unsigned i = 0; i < currentGeneration.size(); i++){
-            adjustedFitness.push_back(1/(1+currentGeneration[i].getFitness()));
-            adjustedSum+=(1/(1+currentGeneration[i].getFitness()));
+        for (unsigned i = 0; i < currentGeneration.size(); i++) {
+            adjustedFitness.push_back(1 / (1 + currentGeneration[i].getFitness()));
+            adjustedSum += (1 / (1 + currentGeneration[i].getFitness()));
         }
-        for (unsigned i=0; i < currentGeneration.size();i++){
+        for (unsigned i = 0; i < currentGeneration.size(); i++) {
             double normalizedFitness = adjustedFitness[i] / adjustedSum;
             currentGeneration[i].setNormalizedFitness(normalizedFitness);
         }
-    }
-    else{
+    } else {
         for (unsigned i = 0; i < currentGeneration.size(); i++) {
             double fitness = currentGeneration[i].getFitness();
             double normalizedFitness = fitness / fitnessSum;
@@ -267,8 +271,8 @@ void GenProg<T>::evaluate() {
         }
     }
     std::sort(currentGeneration.begin(), currentGeneration.end());
-    if (!standardisedFitness){
-        std::reverse(currentGeneration.begin(),currentGeneration.end());
+    if (!standardisedFitness) {
+        std::reverse(currentGeneration.begin(), currentGeneration.end());
     }
     //count acumulated fitness
     double accumulatedSum = 0.0;
@@ -279,7 +283,7 @@ void GenProg<T>::evaluate() {
     }
 
     std::cout << currentGeneration[0].getFitness() << std::endl;
-    std::cout << currentGeneration[currentGeneration.size()-1].getFitness() << std::endl;
+    std::cout << currentGeneration[currentGeneration.size() - 1].getFitness() << std::endl;
 }
 
 template<typename T>
@@ -311,7 +315,7 @@ void GenProg<T>::vary() {
             }
         }
     }
-    for (unsigned i=0;i<lastGeneration.size();i++){
+    for (unsigned i = 0; i < lastGeneration.size(); i++) {
         currentGeneration.push_back(lastGeneration[i]);
     }
 }
@@ -319,7 +323,7 @@ void GenProg<T>::vary() {
 
 template<typename T>
 void GenProg<T>::selection() {
-    std::sort(currentGeneration.begin(),currentGeneration.end());
+    std::sort(currentGeneration.begin(), currentGeneration.end());
     temporaryGeneration = std::vector<Node<T>>{};
     for (unsigned i = 0; i < populationSize; i++) {
         temporaryGeneration.push_back(currentGeneration[i]);
@@ -416,8 +420,7 @@ Node<T> GenProg<T>::findAndReplace(const Node<T> &tree, int num, int depth) {
             children.erase(children.begin() + i);
             if (initMethod == fullInitializationMethod) {
                 children.insert(children.begin() + i, fullRecursively(depth, tree.getFunc())[0]);
-            }
-            else{
+            } else {
                 children.insert(children.begin() + i, growRecursively(depth, tree.getFunc())[0]);
             }
             break;
@@ -602,7 +605,7 @@ void GenProg<T>::setStandardisedFitness(bool isStandard) {
     this->standardisedFitness = isStandard;
 }
 
-template <typename T>
+template<typename T>
 const std::vector<Node<T>> &GenProg<T>::getCurrentGeneration() {
     return this->currentGeneration;
 }
@@ -612,7 +615,7 @@ void GenProg<T>::setCurrentGeneration(const std::vector<Node<T>> &currGen) {
     this->currentGeneration = currGen;
 }
 
-template <typename T>
+template<typename T>
 const std::vector<Node<T>> &GenProg<T>::getLastGeneration() {
     return this->lastGeneration;
 }
@@ -622,11 +625,7 @@ bool GenProg<T>::terminationCriterion() {
     return false;
 }
 
-template <typename T>
-void GenProg<T>::postCycle(){
-
-    if (!log.isDisabled()){
-            log.addGeneration(temporaryGeneration);
-        }
-    lastGeneration = temporaryGeneration;
+template<typename T>
+void GenProg<T>::postCycle() {
+    currentGeneration = temporaryGeneration;
 }
