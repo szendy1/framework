@@ -2,7 +2,7 @@
 #ifndef ODMOCNINA_SQUAREROOT_H
 #define ODMOCNINA_SQUAREROOT_H
 
-#include "include/GenProg.h"
+#include "include_GenProg/GenProgLib.h"
 #include <functional>
 
 template<typename T>

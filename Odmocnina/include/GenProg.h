@@ -36,8 +36,10 @@ public:
 
     virtual void selection();
 
-    std::vector<Func<T> > functions;
-    std::vector<Func<T> > terminals;
+    std::vector<Func < T> >
+    functions;
+    std::vector<Func < T> >
+    terminals;
 
     void setPopulationSize(unsigned size);
 
@@ -53,26 +55,36 @@ public:
 
     void setMaxTreeHeight(unsigned height);
 
-    const Log<T> &getLog() const;
+    const Log <T> &getLog() const;
 
-    void addFunction(const Func<T> &func);
+    void addFunction(const Func <T> &func);
 
-    void setFunctions(const std::vector<Func<T> > &func);
+    void setFunctions(const std::vector<Func < T>
 
-    void addTerminal(const Func<T> &term);
+    > &func);
 
-    void setTerminals(const std::vector<Func<T> > &term);
+    void addTerminal(const Func <T> &term);
+
+    void setTerminals(const std::vector<Func < T>
+
+    > &term);
 
     void setStandardisedFitness(bool isStandard);
 
-    const std::vector<Node<T>> &getCurrentGeneration();
+    const std::vector<Node < T>> &
 
-    void setCurrentGeneration(const std::vector<Node<T>> &currGen);
+    getCurrentGeneration();
 
-    const std::vector<Node<T>> &getLastGeneration();
+    void setCurrentGeneration(const std::vector<Node < T>>
+
+    &currGen);
+
+    const std::vector<Node < T>> &
+
+    getLastGeneration();
 
 
-    virtual double fitFunc(const Node<T> &root) { return 0.0; };
+    virtual double fitFunc(const Node <T> &root) { return 0.0; };
 
     virtual bool terminationCriterion();
 
@@ -83,9 +95,12 @@ public:
 private:
     std::mutex m;
 
-    std::vector<Node<T> > lastGeneration;
-    std::vector<Node<T> > currentGeneration;
-    std::vector<Node<T> > temporaryGeneration;
+    std::vector<Node < T> >
+    lastGeneration;
+    std::vector<Node < T> >
+    currentGeneration;
+    std::vector<Node < T> >
+    temporaryGeneration;
 
     unsigned generation;
 
@@ -103,34 +118,45 @@ private:
 
     bool standardisedFitness = true;
 
-    Log<T> log;
+    Log <T> log;
 
     //Random generator
     std::random_device rd;
     std::mt19937 mt = std::mt19937(rd()); // seed the generator
     int getRnd(int from, int to);
 
-    Node<T> fullTreeCreate();
+    Node <T> fullTreeCreate();
 
-    Node<T> growTreeCreate();
+    Node <T> growTreeCreate();
 
-    const std::vector<Node<T> > growRecursively(const int depth, const Func<T> &func);
+    const std::vector<Node < T> >
 
-    const std::vector<Node<T> > fullRecursively(const int depth, const Func<T> &func);
+    growRecursively(const int depth, const Func <T> &func);
+
+    const std::vector<Node < T> >
+
+    fullRecursively(const int depth, const Func <T> &func);
 
     void performMutation();
 
-    Node<T> mutate(const Node<T> &tree);
+    Node <T> mutate(const Node <T> &tree);
 
-    Node<T> findAndReplace(const Node<T> &tree, int num, int depth);
+    Node <T> findAndReplace(const Node <T> &tree, int num, int depth);
 
     void performCrossover();
 
-    std::pair<Node<T>, Node<T>> crossover(const Node<T> &tree1, const Node<T> &tree2);
+    std::pair<Node < T>, Node <T>> crossover(
+    const Node <T> &tree1,
+    const Node <T> &tree2
+    );
 
-    std::pair<Node<T> &, int> getChildByNum(Node<T> &tree, int num);
+    std::pair<Node < T> &, int>
+    getChildByNum(Node<T>
+    &tree,
+    int num
+    );
 
-    Node<T> getRandomIndividual();
+    Node <T> getRandomIndividual();
 
     void createIndividual();
 
